@@ -1,0 +1,605 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.84494366389812,
+            18.797563341324484
+          ],
+          [
+            73.8486851790282,
+            18.789103037304738
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-000",
+        "start_coords": "(18.7976, 73.8449)",
+        "end_coords": "(18.7891, 73.8487)",
+        "installation_year": 2003,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.85972636840269,
+            18.756904109969984
+          ],
+          [
+            73.86689261378366,
+            18.73997113935459
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-001",
+        "start_coords": "(18.7569, 73.8597)",
+        "end_coords": "(18.7400, 73.8669)",
+        "installation_year": 2009,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.83793854135659,
+            18.7461503297362
+          ],
+          [
+            73.83065309982445,
+            18.746688651755132
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-002",
+        "start_coords": "(18.7462, 73.8379)",
+        "end_coords": "(18.7467, 73.8307)",
+        "installation_year": 2003,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.88623118010753,
+            18.741253752231426
+          ],
+          [
+            73.88174805861341,
+            18.74764255003244
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-003",
+        "start_coords": "(18.7413, 73.8862)",
+        "end_coords": "(18.7476, 73.8817)",
+        "installation_year": 2008,
+        "material": "HDPE",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.83542669494301,
+            18.72384813289519
+          ],
+          [
+            73.83041104805957,
+            18.725038362271686
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-004",
+        "start_coords": "(18.7238, 73.8354)",
+        "end_coords": "(18.7250, 73.8304)",
+        "installation_year": 2008,
+        "material": "Steel",
+        "status": "Maintenance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.8688566614701,
+            18.744788472593413
+          ],
+          [
+            73.88611654108394,
+            18.74761329721215
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-005",
+        "start_coords": "(18.7448, 73.8689)",
+        "end_coords": "(18.7476, 73.8861)",
+        "installation_year": 2003,
+        "material": "HDPE",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.86323313614902,
+            18.744803444446283
+          ],
+          [
+            73.85474755407402,
+            18.764151565827923
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-006",
+        "start_coords": "(18.7448, 73.8632)",
+        "end_coords": "(18.7642, 73.8547)",
+        "installation_year": 2005,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.85370235343525,
+            18.719343341654305
+          ],
+          [
+            73.85778208241683,
+            18.730416597741577
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-007",
+        "start_coords": "(18.7193, 73.8537)",
+        "end_coords": "(18.7304, 73.8578)",
+        "installation_year": 2023,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.83034614424506,
+            18.741289599142718
+          ],
+          [
+            73.82314989672248,
+            18.72736709540821
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-008",
+        "start_coords": "(18.7413, 73.8303)",
+        "end_coords": "(18.7274, 73.8231)",
+        "installation_year": 2006,
+        "material": "HDPE",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.84112596575531,
+            18.715447540700904
+          ],
+          [
+            73.85715387979458,
+            18.730801515419657
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-009",
+        "start_coords": "(18.7154, 73.8411)",
+        "end_coords": "(18.7308, 73.8572)",
+        "installation_year": 2008,
+        "material": "HDPE",
+        "status": "Maintenance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.83403011737096,
+            18.78839278944044
+          ],
+          [
+            73.85054028049328,
+            18.771308189078177
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-010",
+        "start_coords": "(18.7884, 73.8340)",
+        "end_coords": "(18.7713, 73.8505)",
+        "installation_year": 2010,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.83646121537717,
+            18.722659809687833
+          ],
+          [
+            73.83973340868577,
+            18.727593391404394
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-011",
+        "start_coords": "(18.7227, 73.8365)",
+        "end_coords": "(18.7276, 73.8397)",
+        "installation_year": 2013,
+        "material": "HDPE",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.8726539112163,
+            18.704417300321282
+          ],
+          [
+            73.86480229660779,
+            18.704722624448372
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-012",
+        "start_coords": "(18.7044, 73.8727)",
+        "end_coords": "(18.7047, 73.8648)",
+        "installation_year": 2021,
+        "material": "HDPE",
+        "status": "Maintenance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.84901345669827,
+            18.761371214512895
+          ],
+          [
+            73.86048718920897,
+            18.745373558741967
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-013",
+        "start_coords": "(18.7614, 73.8490)",
+        "end_coords": "(18.7454, 73.8605)",
+        "installation_year": 2002,
+        "material": "Cast Iron",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.83189894022011,
+            18.71967107195797
+          ],
+          [
+            73.82714251944944,
+            18.721288902949567
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-014",
+        "start_coords": "(18.7197, 73.8319)",
+        "end_coords": "(18.7213, 73.8271)",
+        "installation_year": 2012,
+        "material": "Steel",
+        "status": "Maintenance"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.8325277819796,
+            18.701647437847825
+          ],
+          [
+            73.81830184042988,
+            18.70597345339221
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-015",
+        "start_coords": "(18.7016, 73.8325)",
+        "end_coords": "(18.7060, 73.8183)",
+        "installation_year": 2019,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.8758909946594,
+            18.702403614909176
+          ],
+          [
+            73.87349775196506,
+            18.7019044848114
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-016",
+        "start_coords": "(18.7024, 73.8759)",
+        "end_coords": "(18.7019, 73.8735)",
+        "installation_year": 2002,
+        "material": "Cast Iron",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.89326194065708,
+            18.728461389638376
+          ],
+          [
+            73.87380060547774,
+            18.726935143105347
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-017",
+        "start_coords": "(18.7285, 73.8933)",
+        "end_coords": "(18.7269, 73.8738)",
+        "installation_year": 2009,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.83235791873949,
+            18.76820232899141
+          ],
+          [
+            73.84006692614678,
+            18.78803194483975
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-018",
+        "start_coords": "(18.7682, 73.8324)",
+        "end_coords": "(18.7880, 73.8401)",
+        "installation_year": 2010,
+        "material": "Cast Iron",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.82870997216295,
+            18.74623645676323
+          ],
+          [
+            73.84636116140935,
+            18.74512387718689
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-019",
+        "start_coords": "(18.7462, 73.8287)",
+        "end_coords": "(18.7451, 73.8464)",
+        "installation_year": 2007,
+        "material": "Cast Iron",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.89600935939531,
+            18.79280874837059
+          ],
+          [
+            73.9,
+            18.79029814022036
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-020",
+        "start_coords": "(18.7928, 73.8960)",
+        "end_coords": "(18.7903, 73.9000)",
+        "installation_year": 2008,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.87804008266035,
+            18.710317866709094
+          ],
+          [
+            73.89688795808118,
+            18.72290426574904
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-021",
+        "start_coords": "(18.7103, 73.8780)",
+        "end_coords": "(18.7229, 73.8969)",
+        "installation_year": 2016,
+        "material": "Cast Iron",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.88524254254632,
+            18.766382931017567
+          ],
+          [
+            73.88214027364555,
+            18.779242833187805
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-022",
+        "start_coords": "(18.7664, 73.8852)",
+        "end_coords": "(18.7792, 73.8821)",
+        "installation_year": 2000,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.87551516773101,
+            18.70863616906045
+          ],
+          [
+            73.87042730056275,
+            18.7
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-023",
+        "start_coords": "(18.7086, 73.8755)",
+        "end_coords": "(18.7000, 73.8704)",
+        "installation_year": 2023,
+        "material": "Steel",
+        "status": "Active"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.8997533845649,
+            18.760253657975515
+          ],
+          [
+            73.9,
+            18.772506256991576
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "PL-CHKN-024",
+        "start_coords": "(18.7603, 73.8998)",
+        "end_coords": "(18.7725, 73.9000)",
+        "installation_year": 2017,
+        "material": "HDPE",
+        "status": "Active"
+      }
+    }
+  ]
+}
