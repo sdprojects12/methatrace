@@ -1,0 +1,6 @@
+pandas
+geopandas
+shapely
+pytest
+streamlit
+scikit-learn
