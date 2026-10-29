@@ -4,3 +4,4 @@ shapely
 pytest
 streamlit
 scikit-learn
+pydeck
