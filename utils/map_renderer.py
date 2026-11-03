@@ -5,100 +5,98 @@ import streamlit as st
 import json
 
 def get_status_color(status: str) -> list:
-    if status == 'Active': return [0, 255, 127, 255]
-    elif status == 'Maintenance': return [255, 215, 0, 255]
-    elif status == 'Leaking': return [255, 49, 49, 255]
-    return [100, 100, 100, 200]
-
-def get_severity_color(ppm: float) -> list:
-    if ppm < 12: return [255, 215, 0, 220]     # Yellow
-    elif ppm < 30: return [255, 140, 0, 240]   # Orange
-    else: return [255, 0, 0, 255]              # Red
+    if status == 'Active': return [0, 255, 127, 220]       # Neon Green
+    elif status == 'Maintenance': return [255, 215, 0, 220] # Bright Gold
+    elif status == 'Leaking': return [255, 0, 50, 255]      # Crimson Red
+    return [100, 100, 100, 150]
 
 def render_pipeline_map(pipelines_gdf: gpd.GeoDataFrame, observations_df: pd.DataFrame):
+    # 1. Neon Pipeline Infrastructure
     pipelines_gdf['color'] = pipelines_gdf['status'].apply(get_status_color)
     pipelines_gdf['width'] = pipelines_gdf['type'].apply(lambda x: 12 if x == 'Main Trunk' else 4)
     pipeline_json = json.loads(pipelines_gdf.to_json())
     
-    # Layer 1: Infrastructure
     pipeline_layer = pdk.Layer(
         "GeoJsonLayer",
         pipeline_json,
-        pickable=True,
         stroked=True,
         filled=False,
         get_line_color="properties.color", 
         get_line_width="properties.width",
         line_width_scale=2,
-        line_width_min_pixels=1,
     )
     
-    # Layer 2: Gaseous Plume Heatmap (Simulates the spreading cloud)
-    heatmap_layer = pdk.Layer(
-        "HeatmapLayer",
+    # 2. Cinematic 3D Hexagon Matrix (Replaces the blurry heatmap)
+    hex_layer = pdk.Layer(
+        "HexagonLayer",
         observations_df,
-        opacity=0.4,
         get_position=["longitude", "latitude"],
         get_weight="methane_concentration_ppm",
-        radius_pixels=90,
+        radius=250,
+        elevation_scale=15,
+        elevation_range=[0, 1500],
+        extruded=True,
+        coverage=0.85,
         color_range=[
-            [0, 0, 0, 0],          # Transparent baseline
-            [255, 215, 0, 100],    # Light Yellow
-            [255, 140, 0, 150],    # Orange
-            [255, 0, 0, 200]       # Red center
-        ]
+            [10, 25, 50, 180],     # Dark Sci-Fi Blue (Safe)
+            [0, 120, 200, 200],    # Bright Blue
+            [255, 215, 0, 220],    # Gold (Warning)
+            [255, 100, 0, 240],    # Neon Orange (Danger)
+            [255, 0, 50, 255]      # Crimson (Critical)
+        ],
+        material={"ambient": 0.5, "diffuse": 0.7, "shininess": 100, "specularColor": [255, 255, 255]}
     )
 
-    # Layer 3: 3D Pillars (Marks the exact high-density source)
+    # 3. Solid 3D Anomaly Pillars
     anomalies_df = observations_df[observations_df['is_ml_anomaly'] == True].copy()
-    anomalies_df['pillar_color'] = anomalies_df['methane_concentration_ppm'].apply(get_severity_color)
     
-    column_layer = pdk.Layer(
+    pillar_layer = pdk.Layer(
         "ColumnLayer",
         anomalies_df,
         get_position=["longitude", "latitude"],
         get_elevation="methane_concentration_ppm",
-        elevation_scale=60, 
-        radius=90,
-        get_fill_color="pillar_color",
-        pickable=True,
-        auto_highlight=True,
+        elevation_scale=80, 
+        radius=100,
+        get_fill_color=[255, 0, 0, 255],
         extruded=True,
-        material={"ambient": 0.3, "diffuse": 0.8, "shininess": 40, "specularColor": [255, 255, 255]}
+        auto_highlight=True,
+        pickable=True,
+        material={"ambient": 0.7, "diffuse": 0.9, "shininess": 120, "specularColor": [255, 255, 255]}
     )
 
+    # 4. Wind Trajectory Arcs (Visualizing gas blowing Northeast)
+    anomalies_df['downwind_lon'] = anomalies_df['longitude'] + 0.025
+    anomalies_df['downwind_lat'] = anomalies_df['latitude'] + 0.025
+    
+    arc_layer = pdk.Layer(
+        "ArcLayer",
+        data=anomalies_df,
+        get_source_position=["longitude", "latitude"],
+        get_target_position=["downwind_lon", "downwind_lat"],
+        get_source_color=[255, 0, 50, 255],
+        get_target_color=[255, 150, 0, 50],  # Fades out as it blows away
+        get_width=6,
+        get_tilt=15,
+    )
+
+    # 5. Isometric Fly-Over Camera
     view_state = pdk.ViewState(
         latitude=18.750, 
-        longitude=73.810, 
-        zoom=11.7, 
-        pitch=50,
-        bearing=35 # Angled to show the wind direction stretch
+        longitude=73.805, 
+        zoom=11.3, 
+        pitch=65,       # Extreme cinematic tilt
+        bearing=35      # Rotated to face the wind direction
     )
 
-    # SCADA-Grade Tooltip
-    tooltip_html = """
-    <div style='font-family: "Courier New", Courier, monospace; font-size: 12px; line-height: 1.5;'>
-        <div style='background-color: #333; padding: 4px; text-align: center; border-bottom: 1px solid #666;'>
-            <b style='color: #00FF00;'>METHA-TRACE TELEMETRY</b>
-        </div>
-        <div style='padding: 8px;'>
-            <b>Asset ID:</b> {pipeline_id}<br/>
-            <b>Type:</b> {type}<br/>
-            <b>Status:</b> {status}<br/>
-            <hr style='border: 0; border-top: 1px dashed #666; margin: 4px 0;'/>
-            <b>Operating Pressure:</b> {pressure_bar} Bar<br/>
-            <b>Burial Depth:</b> {depth_m} m<br/>
-            <b>Installed:</b> {installed}
-        </div>
-    </div>
-    """
-
     r = pdk.Deck(
-        layers=[heatmap_layer, pipeline_layer, column_layer],
+        layers=[hex_layer, pipeline_layer, arc_layer, pillar_layer],
         initial_view_state=view_state,
         map_provider="carto",
         map_style="dark",
-        tooltip={"html": tooltip_html, "style": {"backgroundColor": "#1A1A1A", "color": "#FFF", "border": "1px solid #444", "padding": "0"}}
+        tooltip={
+            "html": "<b style='color:#00FF00;'>CRITICAL BREACH DETECTED</b><br/><b>PPM:</b> {methane_concentration_ppm}",
+            "style": {"backgroundColor": "#0A0A0A", "color": "#FFF", "border": "1px solid #FF0033"}
+        }
     )
     
-    st.pydeck_chart(r, use_container_width=True)
+    st.pydeck_chart(r, width='stretch')

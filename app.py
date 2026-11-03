@@ -1,4 +1,5 @@
 import streamlit as st
+from utils.risk_engine import fetch_current_weather, calculate_risk_scores
 from utils.data_loader import load_pipelines, load_observations
 from utils.anomaly_detector import detect_ml_anomalies
 from utils.map_renderer import render_pipeline_map
@@ -53,5 +54,32 @@ if pipelines_gdf is not None and raw_observations is not None:
         st.subheader("System Logs")
         anomaly_count = processed_obs['is_ml_anomaly'].sum()
         st.warning(f"AI Engine detected **{anomaly_count}** critical emission hotspots.")
+
+    # --- ARNAV'S RISK ENGINE MODULE ---
+    st.markdown("### ⚠️ Pipeline Risk Assessment")
+
+    # Fetch weather with caching so it doesn't spam the API on every click
+    @st.cache_data(ttl=600)
+    def get_weather():
+        return fetch_current_weather()
+
+    weather_data = get_weather()
+
+    # Show a warning if the API fails and it uses the mock data
+    if weather_data.get("source") == "fallback_mock":
+        st.warning("Weather API offline. Using simulated meteorological data.")
+    else:
+        st.info(f"Live Weather (Chakan Hub): {weather_data['temperature_c']}°C | Wind: {weather_data['wind_direction_deg']}° at {weather_data['wind_speed_kmh']} km/h")
+
+    # Calculate scores and display the table using the correct 'processed_obs' variable
+    scored_pipelines = calculate_risk_scores(pipelines_gdf, processed_obs, weather_data)
+
+    st.caption(scored_pipelines.attrs.get("disclaimer", "Simulated Risk Score for demonstration purposes only."))
+    st.dataframe(
+        scored_pipelines[["pipeline_id", "simulated_risk_score", "risk_level", "risk_explanation"]], 
+        use_container_width=True,
+        hide_index=True
+    )
+
 else:
     st.error("System Failure: Could not load data pipeline.")
