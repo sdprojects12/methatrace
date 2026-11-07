@@ -6,3 +6,5 @@ streamlit
 scikit-learn
 pydeck
 reportlab
+fastapi
+uvicorn[standard]

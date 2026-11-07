@@ -441,3 +441,64 @@ def calculate_risk_scores(pipelines, observations, weather=None, reference_year=
     result.attrs["weather"] = weather
     result.attrs["disclaimer"] = RISK_DISCLAIMER
     return result
+
+
+def assess_pipeline_risk(
+    pipeline: dict,
+    observations: pd.DataFrame,
+    sensor_reading: dict = None,
+    weather: dict = None,
+) -> dict:
+    """
+    Adapt the existing fleet risk engine for one selected pipeline.
+
+    Returns a structured result for utils.integrations.
+    """
+
+    from shapely.geometry import LineString
+
+    start = pipeline.get("start_coords")
+    end = pipeline.get("end_coords")
+
+    if not start or not end:
+        raise ValueError("Pipeline start/end coordinates are unavailable.")
+
+    # Dashboard coordinates are (latitude, longitude).
+    # Shapely expects (longitude, latitude).
+    geometry = LineString([
+        (start[1], start[0]),
+        (end[1], end[0]),
+    ])
+
+    installed = pipeline.get("installation_year")
+    if installed is None:
+        installed = pipeline.get("installed")
+
+    single_pipeline = pd.DataFrame([{
+        "pipeline_id": pipeline["pipeline_id"],
+        "geometry": geometry,
+        "pressure_bar": pipeline.get("pressure_bar"),
+        "installed": installed,
+    }])
+
+    result = calculate_risk_scores(
+        single_pipeline,
+        observations,
+        weather=weather,
+    )
+
+    row = result.iloc[0]
+
+    factors = [
+        f"Methane contribution: {row['score_methane']:.1f}/45",
+        f"Pipeline age contribution: {row['score_age']:.1f}/20",
+        f"Pressure contribution: {row['score_pressure']:.1f}/20",
+        f"Wind contribution: {row['score_wind']:.1f}/15",
+        row["risk_explanation"],
+    ]
+
+    return {
+        "score": float(row["simulated_risk_score"]),
+        "level": str(row["risk_level"]),
+        "factors": factors,
+    }
