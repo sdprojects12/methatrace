@@ -1,139 +1,145 @@
-import os
-import json
-import random
-import datetime
+"""Generate the deterministic synthetic MethaTrace observation dataset.
+
+Pipeline geometries and operational statuses are read from the existing
+``chakan_pipelines_simulated.geojson`` file and are never regenerated here.
+All readings remain simulated and are not real methane measurements.
+"""
+
 import csv
+import datetime as dt
+import json
 import math
+import random
+import shutil
+from pathlib import Path
 
-print("Initializing Sentinel-5P & SCADA Simulation for Chakan MIDC...")
+import geopandas as gpd
+from shapely.geometry import Point
 
-HUB = {"lon": 73.830, "lat": 18.750}
+
+SEED = 20261107
+OBSERVATION_COUNT = 600
+PIPELINE_EVENT_COUNT = 48
+BACKGROUND_COUNT = OBSERVATION_COUNT - (2 * PIPELINE_EVENT_COUNT)
+OBSERVATION_THRESHOLD_PPM = 5.0
+METRIC_CRS = "EPSG:32643"
+REFERENCE_END = dt.datetime(2026, 1, 15, 12, 0, 0)
+
+DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+PIPELINES_PATH = DATA_DIR / "chakan_pipelines_simulated.geojson"
+OBSERVATIONS_PATH = DATA_DIR / "methane_observations.csv"
+BACKUP_PATH = DATA_DIR / "methane_observations.csv.original.bak"
+
 CHAKAN_ZONES = [
-    {"name": "Tata Motors Sector", "lon": 73.818, "lat": 18.748},
-    {"name": "Mahindra Plant Area", "lon": 73.791, "lat": 18.790},
-    {"name": "MIDC Phase 2", "lon": 73.800, "lat": 18.775},
-    {"name": "Bajaj Auto Corridor", "lon": 73.820, "lat": 18.715}
+    {"lon": 73.818, "lat": 18.748},
+    {"lon": 73.791, "lat": 18.790},
+    {"lon": 73.800, "lat": 18.775},
+    {"lon": 73.820, "lat": 18.715},
 ]
-
-features = []
-leak_nodes = []
-pipeline_id_counter = 1
-current_year = datetime.datetime.now().year
-
-# 1. Build the SCADA Pipeline Network
-for zone in CHAKAN_ZONES:
-    features.append({
-        "type": "Feature",
-        "geometry": {"type": "LineString", "coordinates": [[HUB["lon"], HUB["lat"]], [zone["lon"], zone["lat"]]]},
-        "properties": {
-            "pipeline_id": f"TRUNK-{pipeline_id_counter:03d}",
-            "type": "Main Trunk",
-            "status": "Active",
-            "material": "High-Pressure Steel",
-            "pressure_bar": round(random.uniform(60, 80), 1),
-            "depth_m": round(random.uniform(2.5, 4.0), 1),
-            "installed": random.randint(1995, 2010)
-        }
-    })
-    pipeline_id_counter += 1
-
-    grid_size = 4
-    step = 0.005
-    start_lon, start_lat = zone["lon"] - (step*2), zone["lat"] - (step*2)
-
-    for i in range(grid_size):
-        for j in range(grid_size):
-            lon, lat = start_lon + (i * step), start_lat + (j * step)
-            
-            # Distribution Lines with Metadata
-            for is_vertical in [False, True]:
-                end_lon = lon if is_vertical else lon + step
-                end_lat = lat + step if is_vertical else lat
-                
-                status = random.choices(['Active', 'Maintenance', 'Leaking'], weights=[88, 10, 2])[0]
-                if status == 'Leaking': 
-                    leak_nodes.append({"lon": (lon+end_lon)/2, "lat": (lat+end_lat)/2, "intensity": random.uniform(30, 70)})
-                
-                features.append({
-                    "type": "Feature",
-                    "geometry": {"type": "LineString", "coordinates": [[lon, lat], [end_lon, end_lat]]},
-                    "properties": {
-                        "pipeline_id": f"DIST-{pipeline_id_counter:04d}", 
-                        "type": "Distribution", 
-                        "status": status, 
-                        "material": "HDPE",
-                        "pressure_bar": round(random.uniform(15, 30), 1),
-                        "depth_m": round(random.uniform(1.0, 2.0), 1),
-                        "installed": random.randint(2015, current_year)
-                    }
-                })
-                pipeline_id_counter += 1
-
-os.makedirs('data', exist_ok=True)
-with open('data/chakan_pipelines.geojson', 'w') as f:
-    json.dump({"type": "FeatureCollection", "features": features}, f, indent=2)
-
-print(f"-> Generated {len(features)} SCADA pipelines (Active leaks: {len(leak_nodes)}).")
-
-# 2. Generate Methane Observations with Directional Wind Plumes
-PREVAILING_WIND_DEG = 45.0  # Wind blowing Northeast
+LEAKING_PIPELINES = ("DIST-0068", "DIST-0129")
+WIND_DIRECTION_DEG = 45.0
 WIND_SPEED_KMH = 15.0
-WIND_RAD = math.radians(PREVAILING_WIND_DEG)
-num_obs = 600
-observations = []
-end_time = datetime.datetime.now()
 
-def calculate_distance(lat1, lon1, lat2, lon2):
-    R = 6371000
-    dphi, dlambda = math.radians(lat2 - lat1), math.radians(lon2 - lon1)
-    a = math.sin(dphi/2)**2 + math.cos(math.radians(lat1))*math.cos(math.radians(lat2))*math.sin(dlambda/2)**2
-    return R * 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 
-for i in range(num_obs):
-    # Base coordinate
-    target_zone = random.choice(CHAKAN_ZONES)
-    lon = target_zone["lon"] + random.uniform(-0.04, 0.04)
-    lat = target_zone["lat"] + random.uniform(-0.04, 0.04)
-    
-    ppm = random.uniform(1.85, 2.10) 
-    source = 'Background'
-    
-    for leak in leak_nodes:
-        # Calculate raw distance
-        dist_meters = calculate_distance(lat, lon, leak['lat'], leak['lon'])
-        
-        # Calculate angle from leak to observation
-        angle_to_obs = math.atan2(lon - leak['lon'], lat - leak['lat'])
-        
-        # Plume physics: Gas concentration is highest downwind
-        angle_diff = abs(angle_to_obs - WIND_RAD)
-        if angle_diff > math.pi: angle_diff = (2 * math.pi) - angle_diff
-        
-        # If observation is downwind (angle_diff is small), gas travels further
-        wind_factor = math.exp(-angle_diff * 2) 
-        effective_distance = dist_meters / (0.5 + (wind_factor * (WIND_SPEED_KMH / 5)))
+def _timestamp(rng: random.Random, hours: float = 168.0) -> str:
+    value = REFERENCE_END - dt.timedelta(hours=rng.uniform(0, hours))
+    return value.strftime("%Y-%m-%d %H:%M:%S")
 
-        if effective_distance < 800:
-            added_ppm = leak['intensity'] * math.exp(-effective_distance / 150)
-            if added_ppm > 2.0:
-                ppm += added_ppm
-                source = 'Pipeline Leak'
 
-    observations.append({
-        'observation_id': f"OBS-{i:04d}",
-        'timestamp': (end_time - datetime.timedelta(hours=random.uniform(0, 24))).strftime("%Y-%m-%d %H:%M:%S"),
-        'latitude': round(lat, 6),
-        'longitude': round(lon, 6),
-        'methane_concentration_ppm': round(ppm, 2),
-        'wind_speed_kmh': round(WIND_SPEED_KMH + random.uniform(-3, 3), 1),
-        'wind_direction_deg': round(PREVAILING_WIND_DEG + random.uniform(-5, 5), 1),
-        'source_label': source,
-        'is_anomaly': bool(ppm > 7.0)
-    })
+def _background_observation(index: int, rng: random.Random) -> dict:
+    zone = rng.choice(CHAKAN_ZONES)
+    return {
+        "observation_id": f"OBS-{index:04d}",
+        "timestamp": _timestamp(rng),
+        "latitude": round(zone["lat"] + rng.uniform(-0.04, 0.04), 6),
+        "longitude": round(zone["lon"] + rng.uniform(-0.04, 0.04), 6),
+        "methane_concentration_ppm": round(rng.uniform(1.85, 2.85), 2),
+        "wind_speed_kmh": round(WIND_SPEED_KMH + rng.uniform(-3, 3), 1),
+        "wind_direction_deg": round(WIND_DIRECTION_DEG + rng.uniform(-5, 5), 1),
+        "source_label": "Synthetic Background",
+        "is_anomaly": False,
+    }
 
-with open('data/methane_observations.csv', 'w', newline='') as f:
-    writer = csv.DictWriter(f, fieldnames=observations[0].keys())
-    writer.writeheader()
-    writer.writerows(observations)
 
-print("-> Plume physics applied. Data generation complete.")
+def _pipeline_event_observation(
+    index: int,
+    pipeline_line,
+    rng: random.Random,
+) -> dict:
+    line_length = pipeline_line.length
+    along_line = line_length * rng.uniform(0.12, 0.88)
+    base = pipeline_line.interpolate(along_line)
+
+    before = pipeline_line.interpolate(max(0.0, along_line - 1.0))
+    after = pipeline_line.interpolate(min(line_length, along_line + 1.0))
+    tangent = math.atan2(after.y - before.y, after.x - before.x)
+    offset_angle = tangent + (math.pi / 2.0 if rng.random() < 0.5 else -math.pi / 2.0)
+    offset_m = rng.uniform(18.0, 180.0)
+    point = Point(
+        base.x + math.cos(offset_angle) * offset_m,
+        base.y + math.sin(offset_angle) * offset_m,
+    )
+    point_wgs84 = gpd.GeoSeries([point], crs=METRIC_CRS).to_crs("EPSG:4326").iloc[0]
+
+    if index % 3 == 0:
+        ppm = rng.uniform(5.2, 6.4)
+    else:
+        ppm = rng.uniform(7.0, 12.5)
+
+    return {
+        "observation_id": f"OBS-{index:04d}",
+        "timestamp": _timestamp(rng, hours=96.0),
+        "latitude": round(point_wgs84.y, 6),
+        "longitude": round(point_wgs84.x, 6),
+        "methane_concentration_ppm": round(ppm, 2),
+        "wind_speed_kmh": round(WIND_SPEED_KMH + rng.uniform(-2, 2), 1),
+        "wind_direction_deg": round(WIND_DIRECTION_DEG + rng.uniform(-8, 8), 1),
+        "source_label": "Synthetic Pipeline Event",
+        "is_anomaly": bool(ppm > OBSERVATION_THRESHOLD_PPM),
+    }
+
+
+def generate_observations() -> list[dict]:
+    rng = random.Random(SEED)
+    pipelines = gpd.read_file(PIPELINES_PATH)
+    leaking = pipelines[pipelines["pipeline_id"].isin(LEAKING_PIPELINES)].copy()
+    if set(leaking["pipeline_id"]) != set(LEAKING_PIPELINES):
+        raise ValueError("The configured leaking pipeline IDs are missing from the pipeline dataset.")
+
+    observations = [
+        _background_observation(index, rng)
+        for index in range(BACKGROUND_COUNT)
+    ]
+    next_index = BACKGROUND_COUNT
+    for pipeline_id in LEAKING_PIPELINES:
+        line = leaking.loc[leaking["pipeline_id"] == pipeline_id, "geometry"].iloc[0]
+        projected_line = gpd.GeoSeries([line], crs=pipelines.crs or "EPSG:4326").to_crs(METRIC_CRS).iloc[0]
+        for _ in range(PIPELINE_EVENT_COUNT):
+            observations.append(_pipeline_event_observation(next_index, projected_line, rng))
+            next_index += 1
+
+    rng.shuffle(observations)
+    return observations
+
+
+def main() -> None:
+    if not PIPELINES_PATH.exists():
+        raise FileNotFoundError(f"Pipeline dataset not found: {PIPELINES_PATH}")
+    if OBSERVATIONS_PATH.exists() and not BACKUP_PATH.exists():
+        shutil.copy2(OBSERVATIONS_PATH, BACKUP_PATH)
+
+    observations = generate_observations()
+    with OBSERVATIONS_PATH.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=observations[0].keys())
+        writer.writeheader()
+        writer.writerows(observations)
+
+    print(
+        f"Generated {len(observations)} deterministic synthetic observations "
+        f"({BACKGROUND_COUNT} background, {2 * PIPELINE_EVENT_COUNT} pipeline-event)."
+    )
+    print(f"Original observations preserved at {BACKUP_PATH}.")
+
+
+if __name__ == "__main__":
+    main()

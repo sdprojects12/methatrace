@@ -1,5 +1,5 @@
 """
-Builds PDF inspection reports from live dashboard state (no Streamlit imports).
+Builds PDF inspection reports from shared dashboard data (no UI framework imports).
 Maps the app's data model onto the generate_report() contract in utils/pdf_report.py.
 """
 from __future__ import annotations
@@ -12,8 +12,8 @@ import pandas as pd
 from utils.pipeline_service import (
     METHANE_THRESHOLD_PPM,
     anomaly_info,
-    pipeline_observations,
     pipeline_record,
+    risk_observations,
 )
 
 MAX_REPORT_OBSERVATIONS = 25
@@ -70,7 +70,9 @@ def build_report_inputs(pipeline_id: str, data, reading: dict, risk=None,
     if record is None:
         raise ValueError(f"Unknown pipeline: {pipeline_id!r}")
 
-    obs = pipeline_observations(data.observations, pipeline_id)
+    obs = risk_observations(data.pipelines, data.observations, pipeline_id)
+    if obs is None:
+        obs = pd.DataFrame()
     flagged = obs["is_threshold_anomaly"] | obs["is_ml_anomaly"] if not obs.empty else pd.Series(dtype=bool)
     table = pd.DataFrame()
     if not obs.empty:
@@ -89,6 +91,7 @@ def build_report_inputs(pipeline_id: str, data, reading: dict, risk=None,
         "observations_df": table,
         "anomaly_info": anomaly_info(obs),
         "recommendations": recommendations_for(record, reading, obs, risk),
+        "risk": risk,
     }
 
 

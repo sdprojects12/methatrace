@@ -1,7 +1,7 @@
 """
-Stable sensor-simulation state for Streamlit reruns (no Streamlit imports).
+Stable sensor-simulation state shared by the API and frontend (no UI framework imports).
 
-`state` is any mutable mapping; the dashboard passes st.session_state. A reading for a
+`state` is any mutable mapping. A reading for a
 (pipeline, nonce) pair is generated once from a deterministic seed and then served from the
 store, so unrelated reruns never change what the UI shows. The anomaly scenario is the
 degraded version of the same baseline, so switching scenarios is consistent.

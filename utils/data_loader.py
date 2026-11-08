@@ -1,13 +1,12 @@
 import os
 import pandas as pd
 import geopandas as gpd
-import streamlit as st
 
 # Resolve absolute paths relative to this utility script
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
-PIPELINES_FILE = os.path.join(DATA_DIR, 'chakan_pipelines.geojson')
+PIPELINES_FILE = os.path.join(DATA_DIR, 'chakan_pipelines_simulated.geojson')
 OBSERVATIONS_FILE = os.path.join(DATA_DIR, 'methane_observations.csv')
 
 PIPELINE_REQUIRED_COLUMNS = ("pipeline_id", "status")
@@ -21,7 +20,7 @@ class DataLoadError(Exception):
 def read_pipelines(path: str = None) -> gpd.GeoDataFrame:
     """
     Reads and validates the synthetic pipeline GeoJSON.
-    Pure function (no Streamlit side effects); raises DataLoadError with a readable message.
+    Pure function; raises DataLoadError with a readable message.
     """
     path = path or PIPELINES_FILE
     if not os.path.exists(path):
@@ -43,7 +42,7 @@ def read_pipelines(path: str = None) -> gpd.GeoDataFrame:
 def read_observations(path: str = None) -> pd.DataFrame:
     """
     Reads and validates the synthetic methane observation CSV.
-    Pure function (no Streamlit side effects); raises DataLoadError with a readable message.
+    Pure function; raises DataLoadError with a readable message.
     """
     path = path or OBSERVATIONS_FILE
     if not os.path.exists(path):
@@ -66,30 +65,20 @@ def read_observations(path: str = None) -> pd.DataFrame:
     return obs_df
 
 
-@st.cache_data
 def load_pipelines():
     """
-    Loads synthetic pipeline GeoJSON data for the Chakan area.
-    Returns a GeoDataFrame, or None (after showing an error) on failure.
-    """
-    try:
-        pipelines_gdf = read_pipelines()
-        print("Loaded synthetic pipeline data.")
-        return pipelines_gdf
-    except DataLoadError as e:
-        st.error(str(e))
-        return None
+    Load synthetic pipeline GeoJSON data for the Chakan area.
 
-@st.cache_data
+    Raises DataLoadError when the dataset is missing or invalid. Callers choose
+    their own caching and error-reporting behavior.
+    """
+    return read_pipelines()
+
 def load_observations():
     """
-    Loads synthetic methane observation CSV data.
-    Returns a Pandas DataFrame with parsed datetime, or None (after showing an error) on failure.
+    Load synthetic methane observations with parsed timestamps.
+
+    Raises DataLoadError when the dataset is missing or invalid. Callers choose
+    their own caching and error-reporting behavior.
     """
-    try:
-        obs_df = read_observations()
-        print("Loaded synthetic observation data.")
-        return obs_df
-    except DataLoadError as e:
-        st.error(str(e))
-        return None
+    return read_observations()

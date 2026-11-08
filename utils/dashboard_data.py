@@ -1,6 +1,6 @@
 """
-Loads and prepares everything the dashboard needs, with graceful degradation.
-No Streamlit imports: callers decide how to cache and how to display errors.
+Loads and prepares everything the API needs, with graceful degradation.
+This module is UI-agnostic: callers decide how to cache and display errors.
 """
 from __future__ import annotations
 

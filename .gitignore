@@ -8,5 +8,4 @@ __pycache__/
 venv/
 env/
 
-# Streamlit
-.streamlit/
+.pytest_cache/

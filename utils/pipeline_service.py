@@ -1,5 +1,5 @@
 """
-Pure data logic for the MethaTrace dashboard (no Streamlit imports).
+Pure shared data logic for MethaTrace (no UI framework imports).
 
 Keeps four concepts separate:
   - operational status : asset-register state of a segment (Active, Maintenance, Leaking)
@@ -17,6 +17,7 @@ import geopandas as gpd
 METHANE_THRESHOLD_PPM = 5.0
 # Observations farther than this from every pipeline segment are left unattributed.
 MATCH_TOLERANCE_M = 250.0
+RISK_OBSERVATION_RADIUS_M = 500.0
 # UTM zone 43N, appropriate for the Chakan / Pune area; used for metre-based distances.
 METRIC_CRS = "EPSG:32643"
 UNKNOWN = "Unknown"
@@ -156,6 +157,66 @@ def pipeline_observations(observations: pd.DataFrame, pipeline_id: str) -> pd.Da
     if "timestamp" in subset.columns:
         subset = subset.sort_values("timestamp", ascending=False)
     return subset
+
+
+def risk_observations(
+    pipelines: gpd.GeoDataFrame,
+    observations: pd.DataFrame,
+    pipeline_id: str,
+    radius_m: float = RISK_OBSERVATION_RADIUS_M,
+) -> pd.DataFrame | None:
+    """Return each usable observation within ``radius_m`` of one pipeline.
+
+    Unlike :func:`pipeline_observations`, this deliberately ignores nearest-pipeline
+    ownership. ``None`` means the observation dataset is unavailable; an empty frame
+    means it was available but no usable observations were within the radius.
+    """
+    if observations is None:
+        return None
+    if observations.empty or pipelines is None or "pipeline_id" not in pipelines.columns:
+        return observations.iloc[0:0].copy()
+    if radius_m < 0:
+        raise ValueError("radius_m must be non-negative")
+
+    match = pipelines[pipelines["pipeline_id"] == pipeline_id]
+    if match.empty:
+        return observations.iloc[0:0].copy()
+    geometry = match.iloc[0].get("geometry")
+    if geometry is None:
+        return observations.iloc[0:0].copy()
+    try:
+        if geometry.is_empty or not geometry.is_valid:
+            return observations.iloc[0:0].copy()
+    except (AttributeError, ValueError):
+        return observations.iloc[0:0].copy()
+
+    required = {"latitude", "longitude"}
+    if not required <= set(observations.columns):
+        return observations.iloc[0:0].copy()
+    valid = observations[list(required)].notna().all(axis=1)
+    if not valid.any():
+        return observations.iloc[0:0].copy()
+
+    try:
+        points = gpd.GeoDataFrame(
+            observations.loc[valid].copy(),
+            geometry=gpd.points_from_xy(
+                observations.loc[valid, "longitude"],
+                observations.loc[valid, "latitude"],
+            ),
+            crs="EPSG:4326",
+        ).to_crs(METRIC_CRS)
+        line = gpd.GeoSeries([geometry], crs=_ensure_crs(pipelines).crs).to_crs(METRIC_CRS).iloc[0]
+        distances = points.geometry.distance(line)
+    except (AttributeError, ValueError, TypeError):
+        return observations.iloc[0:0].copy()
+
+    selected = observations.loc[valid].copy()
+    selected["risk_distance_m"] = distances.round(1).to_numpy()
+    selected = selected[selected["risk_distance_m"] <= radius_m]
+    if "observation_id" in selected.columns:
+        selected = selected.drop_duplicates(subset=["observation_id"], keep="first")
+    return selected
 
 
 def anomaly_info(observations: pd.DataFrame) -> dict:

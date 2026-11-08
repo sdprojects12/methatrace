@@ -22,11 +22,12 @@ def generate_report(
     observations_df,
     anomaly_info: dict,
     recommendations: list,
+    risk=None,
     output_path: str = None,
 ):
     """
     Generates MethaTrace Inspection PDF report and returns bytes.
-    
+
     Parameters:
         report_id (str): Unique report identifier.
         pipeline (dict): Pipeline metadata keys:
@@ -42,7 +43,7 @@ def generate_report(
         }
         recommendations (list): List of recommendation strings.
         output_path (str): Optional path to save PDF file. If None, returns bytes.
-        
+
     Returns:
         bytes: PDF file content as bytes if output_path is None.
     """
@@ -127,6 +128,47 @@ def generate_report(
         f"ML-detected anomalies detected: {ml_count}"
     )
     elements.append(Paragraph(anomaly_text, normal_style))
+    elements.append(Spacer(1, 12))
+
+    # Risk assessment
+    elements.append(Paragraph("Pipeline Risk Priority Index", heading3_style))
+    if risk is not None and getattr(risk, "available", False):
+        score = getattr(risk, "score", None)
+        level = getattr(risk, "level", None) or "Unavailable"
+        scored_maximum = getattr(risk, "scored_maximum", None)
+        quality = getattr(risk, "data_quality", None) or "unknown"
+        score_text = "N/A" if score is None else f"{score:.1f}"
+        maximum_text = "N/A" if scored_maximum is None else str(int(scored_maximum))
+        elements.append(Paragraph(
+            f"<b>Index:</b> {escape(score_text)}/{escape(maximum_text)}"
+            f" &nbsp; <b>Classification:</b> {escape(str(level))}"
+            f" &nbsp; <b>Data quality:</b> {escape(str(quality))}",
+            normal_style,
+        ))
+        factor_breakdown = getattr(risk, "factor_breakdown", ()) or ()
+        if factor_breakdown:
+            risk_rows = [["Factor", "Score", "Maximum", "Availability", "Explanation"]]
+            for factor in factor_breakdown:
+                factor = dict(factor)
+                score_value = factor.get("score")
+                maximum = factor.get("maximum")
+                risk_rows.append([
+                    escape(str(factor.get("name", "N/A"))),
+                    "N/A" if score_value is None else f"{float(score_value):.1f}",
+                    "N/A" if maximum is None else f"{float(maximum):.1f}",
+                    "Available" if factor.get("available") else "Unavailable",
+                    escape(str(factor.get("explanation", "N/A"))),
+                ])
+            risk_table = Table(risk_rows, hAlign="LEFT", colWidths=[3.5*cm, 2*cm, 2*cm, 2.5*cm, 6*cm], repeatRows=1)
+            risk_table.setStyle(TableStyle([
+                ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+                ("GRID", (0, 0), (-1, -1), 0.25, colors.grey),
+                ("FONTSIZE", (0, 0), (-1, -1), 8),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+            ]))
+            elements.append(risk_table)
+    else:
+        elements.append(Paragraph("Risk assessment unavailable.", normal_style))
     elements.append(Spacer(1, 12))
 
     # Contributing Factors
@@ -217,7 +259,7 @@ def generate_report(
         elements.append(Paragraph("No recommendations provided.", normal_style))
     elements.append(Spacer(1, 12))
 
-    # Data Provenance and Disclaimer 
+    # Data Provenance and Disclaimer
     elements.append(PageBreak())
     elements.append(Paragraph("Data Provenance & Disclaimer", heading2_style))
     disclaimer_text = (

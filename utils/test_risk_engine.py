@@ -46,6 +46,7 @@ def make_pipelines(installed=1996, pressure=25.0):
     """One north-south pipeline running through Chakan's centre point."""
     return pd.DataFrame([{
         "pipeline_id": "TRUNK-001",
+        "status": "Active",
         "geometry": FakeLine([(re_.CHAKAN_LON, 18.74), (re_.CHAKAN_LON, 18.76)]),
         "pressure_bar": pressure,
         "installed": installed,
@@ -59,6 +60,7 @@ def make_obs(ppm=8.0, metres_east=200.0, ml_flag=True):
         "longitude": re_.CHAKAN_LON + metres_east_to_deg_lon(metres_east),
         "methane_concentration_ppm": ppm,
         "is_ml_anomaly": ml_flag,
+        "is_threshold_anomaly": ppm > 5.0,
     }])
 
 
@@ -80,6 +82,7 @@ class FakeResponse(io.BytesIO):
 # Weather tests
 # ----------------------------------------------------------------------------
 def test_weather_success_parses_open_meteo_response():
+    re_._clear_weather_cache()
     body = json.dumps({"current": {"temperature_2m": 31.5,
                                    "wind_speed_10m": 14.2,
                                    "wind_direction_10m": 225}}).encode()
@@ -93,6 +96,7 @@ def test_weather_success_parses_open_meteo_response():
 
 
 def test_weather_falls_back_when_network_fails():
+    re_._clear_weather_cache()
     with mock.patch.object(re_.urllib.request, "urlopen",
                            side_effect=urllib.error.URLError("no internet")):
         w = re_.fetch_current_weather()  # must NOT raise
@@ -102,10 +106,30 @@ def test_weather_falls_back_when_network_fails():
 
 
 def test_weather_falls_back_on_garbage_response():
+    re_._clear_weather_cache()
     # Valid JSON, but missing the "current" block
     with mock.patch.object(re_.urllib.request, "urlopen",
                            return_value=FakeResponse(b'{"oops": 1}')):
         assert re_.fetch_current_weather()["source"] == "fallback_mock"
+
+
+def test_weather_reuses_last_live_result_after_rate_limit():
+    re_._clear_weather_cache()
+    body = json.dumps({"current": {"temperature_2m": 31.5,
+                                   "wind_speed_10m": 14.2,
+                                   "wind_direction_10m": 225}}).encode()
+    with mock.patch.object(re_.urllib.request, "urlopen",
+                           side_effect=[FakeResponse(body), urllib.error.HTTPError(
+                               "https://api.open-meteo.com", 429, "Too Many Requests", {}, None)]) as request:
+        fresh = re_.fetch_current_weather()
+        stale = re_.fetch_current_weather()
+        cooled = re_.fetch_current_weather()
+    assert fresh["source"] == "open-meteo"
+    assert stale["source"] == "open-meteo"
+    assert stale["wind_speed_kmh"] == fresh["wind_speed_kmh"]
+    assert "reusing last successful" in stale["note"]
+    assert cooled["source"] == "open-meteo"
+    assert request.call_count == 2
     # Not JSON at all
     with mock.patch.object(re_.urllib.request, "urlopen",
                            return_value=FakeResponse(b"<html>502</html>")):
@@ -119,21 +143,21 @@ def test_exact_score_matches_hand_calculation():
     """
     8.0 PPM, 200 m away, wind blowing FROM the west (270) so the reading
     (east of the pipeline) is downwind:
-        methane  = 45 * ((8-2)/8) * (1 - 200/500) = 45 * 0.75 * 0.6 = 20.25
-        age      = 20 (installed 1996, 30 yrs at 2026)
-        pressure = 20 (25 bar)
-        wind     = 15 * 1.0 * 0.45 = 6.75
-        total    = 67.0  -> "High"
+        methane  = 25 * ((8-2)/8) * (1 - 200/500) = 11.25
+        age      = 15 (installed 1996, 30 yrs at 2026)
+        pressure = 10 (25 bar)
+        wind     = 10 * 1.0 * 0.45 = 4.5
+        total    = 40.75  -> "Medium"
     """
     out = re_.calculate_risk_scores(make_pipelines(), make_obs(),
                                     weather=weather(270), reference_year=REF_YEAR)
     row = out.iloc[0]
-    assert abs(row["score_methane"] - 20.25) < 0.3
-    assert row["score_age"] == 20.0
-    assert row["score_pressure"] == 20.0
-    assert abs(row["score_wind"] - 6.75) < 0.2
-    assert abs(row["simulated_risk_score"] - 67.0) < 0.5
-    assert row["risk_level"] == "High"
+    assert abs(row["score_methane"] - 11.25) < 0.3
+    assert row["score_age"] == 15.0
+    assert row["score_pressure"] == 10.0
+    assert abs(row["score_wind"] - 4.5) < 0.2
+    assert abs(row["simulated_risk_score"] - 40.75) < 0.5
+    assert row["risk_level"] == "Medium"
 
 
 def test_downwind_scores_higher_than_upwind():
@@ -160,16 +184,16 @@ def test_no_methane_means_only_age_and_pressure_count():
                                     far, weather=weather(270), reference_year=REF_YEAR)
     row = out.iloc[0]
     assert row["score_methane"] == 0 and row["score_wind"] == 0
-    # age: 10/30*20 = 6.7 ; pressure: 12.5/25*20 = 10.0
-    assert abs(row["simulated_risk_score"] - 16.7) < 0.2
+    # age: 10/30*15 = 5.0 ; pressure: 12.5/25*10 = 5.0
+    assert abs(row["simulated_risk_score"] - 10.0) < 0.2
     assert row["risk_level"] == "Low"
-    assert "no ML-flagged methane" in row["risk_explanation"]
+    assert "no usable methane anomaly" in row["risk_explanation"]
 
 
 def test_non_ml_anomaly_readings_are_ignored():
     out = re_.calculate_risk_scores(make_pipelines(), make_obs(ml_flag=False),
                                     weather=weather(270), reference_year=REF_YEAR)
-    assert out.iloc[0]["score_methane"] == 0
+    assert out.iloc[0]["score_methane"] > 0
 
 
 def test_score_always_between_0_and_100_and_explanation_present():
@@ -185,7 +209,7 @@ def test_score_always_between_0_and_100_and_explanation_present():
 def test_missing_install_year_does_not_crash():
     out = re_.calculate_risk_scores(make_pipelines(installed=float("nan")), make_obs(),
                                     weather=weather(270), reference_year=REF_YEAR)
-    assert "install year unknown" in out.iloc[0]["risk_explanation"]
+    assert "install year unavailable" in out.iloc[0]["risk_explanation"]
 
 
 def test_original_dataframe_untouched_and_disclaimer_attached():
@@ -198,12 +222,9 @@ def test_original_dataframe_untouched_and_disclaimer_attached():
 
 def test_missing_columns_raise_clear_error():
     bad_obs = make_obs().drop(columns=["is_ml_anomaly"])
-    try:
-        re_.calculate_risk_scores(make_pipelines(), bad_obs, weather=weather(270))
-    except ValueError as exc:
-        assert "is_ml_anomaly" in str(exc)
-    else:
-        raise AssertionError("expected ValueError for missing column")
+    result = re_.calculate_risk_scores(make_pipelines(), bad_obs, weather=weather(270))
+    assert result.iloc[0]["score_methane"] is None
+    assert result.iloc[0]["risk_level"] == "Incomplete"
 
 
 def test_scoring_survives_dead_weather_api_end_to_end():

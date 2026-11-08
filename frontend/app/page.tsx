@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchAPI } from "../src/lib/api";
-
+import PipelineMap from "../src/components/PipelineMap";
+import ReportGenerator from "../src/components/ReportGenerator";
 interface DashboardData {
   pipeline_total: number;
   status_counts: Record<string, number>;
@@ -13,22 +15,20 @@ interface DashboardData {
   both_methods: number;
   segments_with_methane_anomalies: number;
   unattributed_observations: number;
+  sensor_alerts: number;
+  high_risk_pipelines: { pipeline_id: string; score: number; level: string }[];
+  high_risk_count: number;
 }
 
-async function getDashboardData(): Promise<DashboardData | null> {
-  try {
-    return await fetchAPI<DashboardData>("/api/dashboard/summary");
-  } catch (error) {
-    console.error("Dashboard API error:", error);
-    return null;
-  }
+interface FleetRiskResponse {
+  assessments: { pipeline_id: string; score: number | null; level: string; data_quality: string; sensor_alert: boolean }[];
 }
 
 function StatCard({
   label,
   value,
   detail,
-  accent = "text-white",
+  accent = "text-foreground",
 }: {
   label: string;
   value: string | number;
@@ -36,12 +36,12 @@ function StatCard({
   accent?: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-[#151a20] p-5">
-      <p className="text-sm text-gray-400">{label}</p>
+    <div className="rounded-xl border border-border bg-surface p-5">
+      <p className="text-sm text-muted">{label}</p>
       <p className={`mt-3 text-3xl font-semibold tracking-tight ${accent}`}>
         {value}
       </p>
-      <p className="mt-2 text-xs text-gray-500">{detail}</p>
+      <p className="mt-2 text-xs text-muted">{detail}</p>
     </div>
   );
 }
@@ -62,12 +62,12 @@ function StatusRow({
   return (
     <div className="space-y-2">
       <div className="flex justify-between text-sm">
-        <span className="text-gray-300">{label}</span>
-        <span className="text-gray-400">
-          {count} <span className="text-gray-600">({percentage.toFixed(1)}%)</span>
+        <span className="text-secondary">{label}</span>
+        <span className="text-muted">
+          {count} <span className="text-subtle">({percentage.toFixed(1)}%)</span>
         </span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-white/5">
+      <div className="h-2 overflow-hidden rounded-full bg-surface-hover">
         <div
           className={`h-full rounded-full ${color}`}
           style={{ width: `${percentage}%` }}
@@ -80,12 +80,80 @@ function StatusRow({
 export default function Home() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
-    getDashboardData()
-      .then(setData)
-      .finally(() => setLoading(false));
-  }, []);
+    let cancelled = false;
+    const controller = new AbortController();
+
+    Promise.all([
+      fetchAPI<DashboardData>("/api/dashboard/summary", { signal: controller.signal }),
+      fetchAPI<FleetRiskResponse>("/api/risk", { signal: controller.signal }),
+    ])
+      .then(([summary, fleetRisk]) => {
+        const validRisks = fleetRisk.assessments.filter(
+          (risk): risk is typeof risk & { score: number } =>
+            risk.score != null && Number.isFinite(risk.score) &&
+            risk.data_quality === "complete" && risk.level !== "Incomplete"
+        );
+        const highRiskCount = validRisks.filter(
+          (risk) => risk.level.toLowerCase() === "high"
+        ).length;
+        const topRisks = [...validRisks]
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+        const result = {
+          ...summary,
+          sensor_alerts: fleetRisk.assessments.filter((risk) => risk.sensor_alert).length,
+          high_risk_count: highRiskCount,
+          high_risk_pipelines: topRisks,
+        };
+        if (!cancelled) {
+          setData(result);
+          setLastUpdated(new Date());
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          console.error("Dashboard API error:", error);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
+
+     return () => {
+        cancelled = true;
+        controller.abort();
+      };
+  }, [retryCount]);
+
+  const retryConnection = () => {
+    setData(null);
+    setLoading(true);
+    setRetryCount((count) => count + 1);
+  };
+
+  const apiStatus = loading
+    ? {
+        label: "Connecting...",
+        className: "border-warning/25 bg-warning/10 text-warning",
+        dotClassName: "bg-warning",
+      }
+    : data
+      ? {
+          label: "API Connected",
+          className: "border-success/25 bg-success/10 text-success",
+          dotClassName: "bg-success",
+        }
+      : {
+          label: "Disconnected",
+          className: "border-danger/25 bg-danger/10 text-danger",
+          dotClassName: "bg-danger",
+        };
 
   const active = data?.status_counts?.Active ?? 0;
   const maintenance = data?.status_counts?.Maintenance ?? 0;
@@ -93,139 +161,91 @@ export default function Home() {
   const total = data?.pipeline_total ?? 0;
 
   return (
-    <main className="flex min-h-screen bg-[#0d1117] text-white">
-      {/* Sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-white/10 bg-[#11161d] p-6 lg:flex lg:flex-col">
-        <div className="mb-12">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-400">
-              <span className="text-xl">M</span>
-            </div>
-            <div>
-              <h1 className="font-semibold tracking-wide">MethaTrace</h1>
-              <p className="text-xs text-gray-500">Methane Intelligence</p>
-            </div>
-          </div>
-        </div>
+    <div className="space-y-8">
+      <div className="flex flex-wrap items-center justify-end gap-3">
+        {lastUpdated && <span className="text-xs text-muted">Updated {lastUpdated.toLocaleTimeString()}</span>}
+        <button type="button" onClick={retryConnection} disabled={loading} aria-busy={loading}
+          className="rounded-lg border border-border px-3 py-2 text-xs text-secondary hover:bg-surface-hover disabled:opacity-60">
+          {loading ? "Refreshing…" : "Refresh data"}
+        </button>
+        <span
+          className={`flex items-center gap-2 rounded-full border px-3 py-2 text-xs ${apiStatus.className}`}
+        >
+          <span className={`h-2 w-2 rounded-full ${apiStatus.dotClassName}`} />
+          {apiStatus.label}
+        </span>
+      </div>
 
-        <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-gray-600">
-          Workspace
+      {/* Introduction */}
+      <div>
+        <h3 className="text-2xl font-semibold tracking-tight">
+          Network Overview
+        </h3>
+        <p className="mt-2 text-sm text-muted">
+          Pipeline infrastructure and methane observation summary.
         </p>
+      </div>
 
-        <nav className="space-y-2 text-sm">
-          <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-emerald-400">
-            Overview
-          </div>
-          <div className="rounded-lg px-4 py-3 text-gray-400">
-            Pipeline Network
-          </div>
-          <div className="rounded-lg px-4 py-3 text-gray-400">
-            Methane Observations
-          </div>
-          <div className="rounded-lg px-4 py-3 text-gray-400">
-            Sensor Monitoring
-          </div>
-          <div className="rounded-lg px-4 py-3 text-gray-400">
-            Risk Analysis
-          </div>
-          <div className="rounded-lg px-4 py-3 text-gray-400">
-            Reports
-          </div>
-        </nav>
-
-        <div className="mt-auto rounded-xl border border-white/10 bg-[#171e26] p-4">
-          <p className="text-xs text-gray-500">MONITORING AREA</p>
-          <p className="mt-2 font-medium">Chakan Industrial Zone</p>
-          <p className="mt-1 text-xs text-gray-500">Maharashtra, India</p>
+      {loading ? (
+        <div className="rounded-xl border border-border bg-surface p-6 text-muted">
+          Loading dashboard data...
         </div>
-      </aside>
-
-      {/* Main content */}
-      <section className="min-w-0 flex-1">
-        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 px-6 py-5 lg:px-10">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-gray-500">
-              Methane Intelligence Platform
-            </p>
-            <h2 className="mt-1 text-xl font-semibold">Overview Dashboard</h2>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-400">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              API Connected
-            </span>
-            <span className="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-400">
-              Chakan Zone
-            </span>
-          </div>
-        </header>
-
-        <div className="space-y-8 p-6 lg:p-10">
-          {/* Introduction */}
-          <div>
-            <h3 className="text-2xl font-semibold tracking-tight">
-              Network Overview
-            </h3>
-            <p className="mt-2 text-sm text-gray-400">
-              Pipeline infrastructure and methane observation summary.
-            </p>
-          </div>
-
-            {loading ? (
-              <div className="rounded-xl border border-white/10 bg-[#151a20] p-6 text-gray-400">
-                Loading dashboard data...
-              </div>
-            ) : !data ? (
-            <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-6">
-              <h3 className="font-medium text-red-400">
+      ) : !data ? (
+            <div className="rounded-xl border border-danger/25 bg-danger/5 p-6">
+              <h3 className="font-medium text-danger">
                 Unable to load dashboard data
               </h3>
-              <p className="mt-2 text-sm text-gray-400">
+              <p className="mt-2 text-sm text-muted">
                 Check that the FastAPI backend is running at the configured API URL.
               </p>
+              <button
+                type="button"
+                onClick={retryConnection}
+                className="mt-4 rounded-lg border border-danger/30 bg-danger/10 px-4 py-2 text-sm text-danger transition hover:bg-danger/20"
+              >
+                Retry Connection
+              </button>
             </div>
-          ) : (
-            <>
+      ) : (
+        <>
               {/* Primary statistics */}
               <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                <StatCard
-                  label="Total Pipelines"
-                  value={data.pipeline_total}
-                  detail="Registered pipeline records"
-                />
-                <StatCard
-                  label="Methane Observations"
-                  value={data.observation_total}
-                  detail="Available observation records"
-                />
-                <StatCard
-                  label="ML Anomalies"
-                  value={data.ml_anomalies}
-                  detail="Flagged by Isolation Forest"
-                  accent="text-amber-400"
-                />
-                <StatCard
-                  label="Affected Segments"
-                  value={data.segments_with_methane_anomalies}
-                  detail="Segments with methane anomalies"
-                  accent="text-orange-400"
-                />
+                {[
+                  { label: "Leaking Pipelines", value: leaking, detail: "Marked as leaking", href: "/pipelines", accent: "text-danger" },
+                  { label: "High Risk Pipelines", value: data.high_risk_count, detail: "Simulated risk assessments", href: "/risk", accent: "text-warning" },
+                  { label: "Active Sensor Alerts", value: data.sensor_alerts, detail: "Current simulated alerts", href: "/sensors", accent: "text-danger" },
+                  { label: "Methane Anomalies", value: data.threshold_anomalies + data.ml_anomalies - data.both_methods, detail: "Unique flagged observations", href: "/methane", accent: "text-warning" },
+                ].map((item) => <Link key={item.label} href={item.href} className="block rounded-xl focus-visible:outline-offset-4">
+                  <StatCard label={item.label} value={item.value} detail={item.detail} accent={item.accent} />
+                </Link>)}
               </div>
+
+              <section className="rounded-xl border border-border bg-surface p-5">
+                <h3 className="font-semibold">Top Risk Pipelines</h3>
+                <p className="mt-1 text-xs text-muted">Highest available simulated risk scores</p>
+                {data.high_risk_pipelines.length ? <div className="mt-4 divide-y divide-border-subtle">
+                  {data.high_risk_pipelines.map((pipeline) => <Link key={pipeline.pipeline_id} href={`/risk?pipeline=${encodeURIComponent(pipeline.pipeline_id)}`} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm hover:text-accent">
+                    <span className="break-all font-medium">{pipeline.pipeline_id}</span><span className="text-danger">{pipeline.level} · {pipeline.score.toFixed(1)}</span>
+                  </Link>)}
+                </div> : <p className="mt-4 text-sm text-muted">No pipeline risk assessments are available.</p>}
+              </section>
 
               {/* Secondary statistics */}
               <div className="grid gap-4 sm:grid-cols-3">
+                <StatCard label="Total Pipelines" value={data.pipeline_total} detail="Registered pipeline records" />
+                <StatCard label="Methane Observations" value={data.observation_total} detail="Available observation records" />
+                <StatCard label="ML Anomalies" value={data.ml_anomalies} detail="Flagged by Isolation Forest" accent="text-warning" />
                 <StatCard
                   label="Threshold Anomalies"
                   value={data.threshold_anomalies}
                   detail="Flagged by the concentration threshold"
-                  accent="text-amber-400"
+                  accent="text-warning"
                 />
                 <StatCard
                   label="Both Detection Methods"
                   value={data.both_methods}
                   detail="Flagged by both methods"
-                  accent="text-emerald-400"
+                  accent="text-success"
                 />
                 <StatCard
                   label="Unattributed Observations"
@@ -233,13 +253,17 @@ export default function Home() {
                   detail="Not assigned to a pipeline segment"
                 />
               </div>
+              {/* Pipeline map */}
+              <PipelineMap />
+
+              <ReportGenerator />
 
               {/* Detailed panels */}
               <div className="grid gap-6 xl:grid-cols-2">
-                <div className="rounded-xl border border-white/10 bg-[#151a20] p-6">
+                <div className="rounded-xl border border-border bg-surface p-6">
                   <div className="mb-6">
                     <h3 className="font-semibold">Pipeline Status</h3>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-muted">
                       Distribution across registered pipelines
                     </p>
                   </div>
@@ -249,25 +273,25 @@ export default function Home() {
                       label="Active"
                       count={active}
                       total={total}
-                      color="bg-emerald-400"
+                      color="bg-success"
                     />
                     <StatusRow
                       label="Maintenance"
                       count={maintenance}
                       total={total}
-                      color="bg-amber-400"
+                      color="bg-warning"
                     />
                     <StatusRow
                       label="Marked as Leaking"
                       count={leaking}
                       total={total}
-                      color="bg-red-400"
+                      color="bg-danger"
                     />
                   </div>
 
-                  <div className="mt-8 border-t border-white/10 pt-5">
+                  <div className="mt-8 border-t border-border pt-5">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-400">
+                      <span className="text-sm text-muted">
                         Total pipelines
                       </span>
                       <span className="text-lg font-semibold">{total}</span>
@@ -275,10 +299,10 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="rounded-xl border border-white/10 bg-[#151a20] p-6">
+                <div className="rounded-xl border border-border bg-surface p-6">
                   <div className="mb-6">
                     <h3 className="font-semibold">Pipeline Categories</h3>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-muted">
                       Breakdown by infrastructure type
                     </p>
                   </div>
@@ -291,7 +315,7 @@ export default function Home() {
                           label={type}
                           count={count}
                           total={total}
-                          color="bg-sky-400"
+                          color="bg-info"
                         />
                       )
                     )}
@@ -300,14 +324,14 @@ export default function Home() {
               </div>
 
               {/* Dataset notice */}
-              <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-5">
+              <div className="rounded-xl border border-warning/25 bg-warning/5 p-5">
                 <div className="flex items-start gap-3">
-                  <span className="text-amber-400">ⓘ</span>
+                  <span className="text-warning">ⓘ</span>
                   <div>
-                    <h4 className="text-sm font-medium text-amber-300">
+                    <h4 className="text-sm font-medium text-warning">
                       Prototype Data Notice
                     </h4>
-                    <p className="mt-1 text-xs leading-6 text-gray-400">
+                    <p className="mt-1 text-xs leading-6 text-muted">
                       This dashboard currently uses synthetic pipeline and
                       sensor data for demonstration. Anomaly flags and
                       pipeline status labels are dataset outputs and should
@@ -316,14 +340,8 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </>
-          )}
-
-          <footer className="border-t border-white/10 pt-5 text-xs text-gray-600">
-            MethaTrace · Prototype Dashboard · Chakan Industrial Zone
-          </footer>
-        </div>
-      </section>
-    </main>
+        </>
+      )}
+    </div>
   );
 }
