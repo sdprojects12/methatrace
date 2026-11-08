@@ -1,0 +1,4925 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.781735,
+            18.720394
+          ],
+          [
+            73.786614,
+            18.721892
+          ],
+          [
+            73.788207,
+            18.722381
+          ],
+          [
+            73.794169,
+            18.728717
+          ],
+          [
+            73.79481,
+            18.729051
+          ],
+          [
+            73.800176,
+            18.731846
+          ],
+          [
+            73.80875,
+            18.733546
+          ],
+          [
+            73.809506,
+            18.733696
+          ],
+          [
+            73.814546,
+            18.73074
+          ],
+          [
+            73.815883,
+            18.729417
+          ],
+          [
+            73.817483,
+            18.727835
+          ],
+          [
+            73.822138,
+            18.723232
+          ],
+          [
+            73.823736,
+            18.721652
+          ],
+          [
+            73.829265,
+            18.72308
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "TRUNK-001",
+        "type": "Main Trunk",
+        "status": "Active",
+        "material": "High-Pressure Steel",
+        "pressure_bar": 74.2,
+        "depth_m": 2.6,
+        "installed": 1998
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.786614,
+            18.721892
+          ],
+          [
+            73.787221,
+            18.720836
+          ],
+          [
+            73.788582,
+            18.719814
+          ],
+          [
+            73.788667,
+            18.718723
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0002",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 20.7,
+        "depth_m": 2.0,
+        "installed": 2026
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.80875,
+            18.733546
+          ],
+          [
+            73.810108,
+            18.732877
+          ],
+          [
+            73.81007,
+            18.732234
+          ],
+          [
+            73.810099,
+            18.730742
+          ],
+          [
+            73.811356,
+            18.730254
+          ],
+          [
+            73.811775,
+            18.729588
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0003",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 17.5,
+        "depth_m": 1.3,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.815883,
+            18.729417
+          ],
+          [
+            73.815795,
+            18.728118
+          ],
+          [
+            73.815393,
+            18.727386
+          ],
+          [
+            73.815406,
+            18.726247
+          ],
+          [
+            73.813734,
+            18.725665
+          ],
+          [
+            73.813767,
+            18.72445
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0004",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.7,
+        "depth_m": 1.7,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.822138,
+            18.723232
+          ],
+          [
+            73.823611,
+            18.723274
+          ],
+          [
+            73.824574,
+            18.724032
+          ],
+          [
+            73.825156,
+            18.724376
+          ],
+          [
+            73.825903,
+            18.725802
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0005",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 27.1,
+        "depth_m": 1.3,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.785176,
+            18.766239
+          ],
+          [
+            73.784599,
+            18.765586
+          ],
+          [
+            73.784209,
+            18.764574
+          ],
+          [
+            73.783044,
+            18.764552
+          ],
+          [
+            73.782697,
+            18.763738
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0006",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 23.5,
+        "depth_m": 1.4,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.811319,
+            18.771424
+          ],
+          [
+            73.81073,
+            18.770364
+          ],
+          [
+            73.810989,
+            18.769245
+          ],
+          [
+            73.810156,
+            18.768307
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0007",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 19.2,
+        "depth_m": 1.6,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.824495,
+            18.767139
+          ],
+          [
+            73.82381,
+            18.768012
+          ],
+          [
+            73.824618,
+            18.770257
+          ],
+          [
+            73.823562,
+            18.7709
+          ],
+          [
+            73.82327,
+            18.772529
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0008",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.9,
+        "depth_m": 1.2,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794933,
+            18.713869
+          ],
+          [
+            73.794322,
+            18.715251
+          ],
+          [
+            73.792733,
+            18.71538
+          ],
+          [
+            73.792339,
+            18.716422
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0009",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.4,
+        "depth_m": 1.2,
+        "installed": 2017
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.790941,
+            18.752654
+          ],
+          [
+            73.789453,
+            18.75406
+          ],
+          [
+            73.790492,
+            18.755785
+          ],
+          [
+            73.790016,
+            18.756755
+          ],
+          [
+            73.788949,
+            18.757877
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0010",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.6,
+        "depth_m": 1.8,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794109,
+            18.776205
+          ],
+          [
+            73.795122,
+            18.77716
+          ],
+          [
+            73.795496,
+            18.778093
+          ],
+          [
+            73.795993,
+            18.778898
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0011",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 17.1,
+        "depth_m": 1.7,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.789118,
+            18.790211
+          ],
+          [
+            73.79012,
+            18.789693
+          ],
+          [
+            73.790454,
+            18.789005
+          ],
+          [
+            73.791688,
+            18.789408
+          ],
+          [
+            73.792236,
+            18.788317
+          ],
+          [
+            73.793603,
+            18.788008
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0012",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.6,
+        "depth_m": 1.6,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81581,
+            18.723307
+          ],
+          [
+            73.81452,
+            18.722962
+          ],
+          [
+            73.813776,
+            18.723445
+          ],
+          [
+            73.812508,
+            18.723129
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0013",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.7,
+        "depth_m": 1.4,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.813289,
+            18.745357
+          ],
+          [
+            73.81242,
+            18.744752
+          ],
+          [
+            73.81228,
+            18.744058
+          ],
+          [
+            73.811457,
+            18.743899
+          ],
+          [
+            73.810442,
+            18.743401
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0014",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.3,
+        "depth_m": 1.2,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81273,
+            18.758183
+          ],
+          [
+            73.813395,
+            18.756987
+          ],
+          [
+            73.8146,
+            18.756271
+          ],
+          [
+            73.815305,
+            18.755407
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0015",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 20.0,
+        "depth_m": 1.2,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.812426,
+            18.788868
+          ],
+          [
+            73.813409,
+            18.789132
+          ],
+          [
+            73.814155,
+            18.789335
+          ],
+          [
+            73.814715,
+            18.788936
+          ],
+          [
+            73.815588,
+            18.789549
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0016",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 23.6,
+        "depth_m": 1.4,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794109,
+            18.776205
+          ],
+          [
+            73.792685,
+            18.776552
+          ],
+          [
+            73.792294,
+            18.777387
+          ],
+          [
+            73.791244,
+            18.777591
+          ],
+          [
+            73.790625,
+            18.77894
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0017",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.4,
+        "depth_m": 1.2,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.812508,
+            18.723129
+          ],
+          [
+            73.810857,
+            18.723682
+          ],
+          [
+            73.810659,
+            18.725365
+          ],
+          [
+            73.809902,
+            18.72644
+          ],
+          [
+            73.808584,
+            18.726625
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0018",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.8,
+        "depth_m": 1.4,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.815305,
+            18.755407
+          ],
+          [
+            73.816156,
+            18.754953
+          ],
+          [
+            73.81677,
+            18.753884
+          ],
+          [
+            73.81782,
+            18.753359
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0019",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 18.3,
+        "depth_m": 1.4,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.82327,
+            18.772529
+          ],
+          [
+            73.824326,
+            18.772589
+          ],
+          [
+            73.824607,
+            18.772869
+          ],
+          [
+            73.8257,
+            18.773069
+          ],
+          [
+            73.826276,
+            18.773461
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0020",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.6,
+        "depth_m": 1.2,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.786614,
+            18.721892
+          ],
+          [
+            73.786382,
+            18.722631
+          ],
+          [
+            73.78675,
+            18.723193
+          ],
+          [
+            73.786297,
+            18.723827
+          ],
+          [
+            73.786232,
+            18.72427
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0021",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 20.3,
+        "depth_m": 1.4,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.788949,
+            18.757877
+          ],
+          [
+            73.7877,
+            18.758557
+          ],
+          [
+            73.787585,
+            18.759923
+          ],
+          [
+            73.786656,
+            18.760635
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0022",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 18.4,
+        "depth_m": 1.7,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.782697,
+            18.763738
+          ],
+          [
+            73.783736,
+            18.763106
+          ],
+          [
+            73.784733,
+            18.762062
+          ],
+          [
+            73.785294,
+            18.76105
+          ],
+          [
+            73.786656,
+            18.760635
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0023",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.8,
+        "depth_m": 1.4,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.811775,
+            18.729588
+          ],
+          [
+            73.812245,
+            18.728857
+          ],
+          [
+            73.813221,
+            18.728555
+          ],
+          [
+            73.813287,
+            18.727646
+          ],
+          [
+            73.814017,
+            18.727363
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0024",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 19.3,
+        "depth_m": 1.2,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.811319,
+            18.771424
+          ],
+          [
+            73.812389,
+            18.771478
+          ],
+          [
+            73.813835,
+            18.770583
+          ],
+          [
+            73.814279,
+            18.771207
+          ],
+          [
+            73.815733,
+            18.771311
+          ],
+          [
+            73.816794,
+            18.771147
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0025",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 19.7,
+        "depth_m": 1.8,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81581,
+            18.723307
+          ],
+          [
+            73.81642,
+            18.722378
+          ],
+          [
+            73.817865,
+            18.722286
+          ],
+          [
+            73.819003,
+            18.722522
+          ],
+          [
+            73.819522,
+            18.722169
+          ],
+          [
+            73.820384,
+            18.721248
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0026",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.2,
+        "depth_m": 1.3,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.825903,
+            18.725802
+          ],
+          [
+            73.826481,
+            18.72669
+          ],
+          [
+            73.82775,
+            18.726499
+          ],
+          [
+            73.828609,
+            18.727506
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0027",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 19.6,
+        "depth_m": 1.6,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.812426,
+            18.788868
+          ],
+          [
+            73.811114,
+            18.789406
+          ],
+          [
+            73.80976,
+            18.789075
+          ],
+          [
+            73.808918,
+            18.789916
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0028",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 15.7,
+        "depth_m": 1.2,
+        "installed": 2024
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.813289,
+            18.745357
+          ],
+          [
+            73.814348,
+            18.745602
+          ],
+          [
+            73.815502,
+            18.745812
+          ],
+          [
+            73.817214,
+            18.746541
+          ],
+          [
+            73.818249,
+            18.747087
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0029",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 26.2,
+        "depth_m": 1.7,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.824495,
+            18.767139
+          ],
+          [
+            73.824976,
+            18.767437
+          ],
+          [
+            73.825938,
+            18.767338
+          ],
+          [
+            73.826742,
+            18.767358
+          ],
+          [
+            73.827703,
+            18.767451
+          ],
+          [
+            73.828686,
+            18.767883
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0030",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 17.2,
+        "depth_m": 1.8,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.786232,
+            18.72427
+          ],
+          [
+            73.787148,
+            18.724745
+          ],
+          [
+            73.787602,
+            18.725541
+          ],
+          [
+            73.787814,
+            18.726193
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0031",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 19.0,
+        "depth_m": 1.5,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.793603,
+            18.788008
+          ],
+          [
+            73.794356,
+            18.787081
+          ],
+          [
+            73.795707,
+            18.786202
+          ],
+          [
+            73.795877,
+            18.785419
+          ],
+          [
+            73.797426,
+            18.784891
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0032",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.5,
+        "depth_m": 1.8,
+        "installed": 2026
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.793603,
+            18.788008
+          ],
+          [
+            73.794014,
+            18.788919
+          ],
+          [
+            73.795965,
+            18.788432
+          ],
+          [
+            73.796747,
+            18.789153
+          ],
+          [
+            73.797014,
+            18.790018
+          ],
+          [
+            73.798019,
+            18.790327
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0033",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.8,
+        "depth_m": 1.9,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.781735,
+            18.767515
+          ],
+          [
+            73.785176,
+            18.766239
+          ],
+          [
+            73.787859,
+            18.765243
+          ],
+          [
+            73.793672,
+            18.771379
+          ],
+          [
+            73.796745,
+            18.772687
+          ],
+          [
+            73.802528,
+            18.775148
+          ],
+          [
+            73.809831,
+            18.772433
+          ],
+          [
+            73.811319,
+            18.771424
+          ],
+          [
+            73.817227,
+            18.767417
+          ],
+          [
+            73.817612,
+            18.767156
+          ],
+          [
+            73.822687,
+            18.76704
+          ],
+          [
+            73.824495,
+            18.767139
+          ],
+          [
+            73.829265,
+            18.7674
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "TRUNK-034",
+        "type": "Main Trunk",
+        "status": "Active",
+        "material": "High-Pressure Steel",
+        "pressure_bar": 62.0,
+        "depth_m": 3.8,
+        "installed": 2007
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.790941,
+            18.752654
+          ],
+          [
+            73.791159,
+            18.751411
+          ],
+          [
+            73.792306,
+            18.751157
+          ],
+          [
+            73.793361,
+            18.750716
+          ],
+          [
+            73.794093,
+            18.749669
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0035",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 18.6,
+        "depth_m": 1.2,
+        "installed": 2026
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794093,
+            18.749669
+          ],
+          [
+            73.793712,
+            18.748899
+          ],
+          [
+            73.793585,
+            18.747549
+          ],
+          [
+            73.792452,
+            18.74673
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0036",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 28.3,
+        "depth_m": 1.7,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.815588,
+            18.789549
+          ],
+          [
+            73.815791,
+            18.790957
+          ],
+          [
+            73.816212,
+            18.791737
+          ],
+          [
+            73.817084,
+            18.792508
+          ],
+          [
+            73.816646,
+            18.794011
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0037",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.5,
+        "depth_m": 1.7,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794093,
+            18.749669
+          ],
+          [
+            73.795497,
+            18.749495
+          ],
+          [
+            73.796352,
+            18.748719
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0038",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 20.4,
+        "depth_m": 1.2,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.808584,
+            18.726625
+          ],
+          [
+            73.809709,
+            18.727168
+          ],
+          [
+            73.810257,
+            18.727623
+          ],
+          [
+            73.811388,
+            18.728496
+          ],
+          [
+            73.811775,
+            18.729588
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0039",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 25.4,
+        "depth_m": 1.4,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.792339,
+            18.716422
+          ],
+          [
+            73.792396,
+            18.717327
+          ],
+          [
+            73.791009,
+            18.718088
+          ],
+          [
+            73.79041,
+            18.719294
+          ],
+          [
+            73.790419,
+            18.720441
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0040",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.3,
+        "depth_m": 1.4,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81782,
+            18.753359
+          ],
+          [
+            73.819057,
+            18.752285
+          ],
+          [
+            73.820358,
+            18.752369
+          ],
+          [
+            73.821423,
+            18.751659
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0041",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 28.9,
+        "depth_m": 1.9,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.816646,
+            18.794011
+          ],
+          [
+            73.81586,
+            18.794158
+          ],
+          [
+            73.815409,
+            18.795395
+          ],
+          [
+            73.814853,
+            18.795642
+          ],
+          [
+            73.814164,
+            18.796031
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0042",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.2,
+        "depth_m": 1.1,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.796352,
+            18.748719
+          ],
+          [
+            73.797696,
+            18.749618
+          ],
+          [
+            73.798913,
+            18.749935
+          ],
+          [
+            73.799298,
+            18.75084
+          ],
+          [
+            73.800583,
+            18.751497
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0043",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.1,
+        "depth_m": 1.3,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.800583,
+            18.751497
+          ],
+          [
+            73.800811,
+            18.752752
+          ],
+          [
+            73.801383,
+            18.753843
+          ],
+          [
+            73.801425,
+            18.755132
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0044",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.6,
+        "depth_m": 1.9,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.808918,
+            18.789916
+          ],
+          [
+            73.809465,
+            18.790708
+          ],
+          [
+            73.80926,
+            18.791294
+          ],
+          [
+            73.809936,
+            18.792002
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0045",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.3,
+        "depth_m": 1.1,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.826276,
+            18.773461
+          ],
+          [
+            73.825238,
+            18.774651
+          ],
+          [
+            73.825881,
+            18.775946
+          ],
+          [
+            73.825252,
+            18.776498
+          ],
+          [
+            73.824353,
+            18.777631
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0046",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 18.7,
+        "depth_m": 1.4,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.80875,
+            18.733546
+          ],
+          [
+            73.809374,
+            18.73434
+          ],
+          [
+            73.810357,
+            18.735366
+          ],
+          [
+            73.810556,
+            18.736447
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0047",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 20.4,
+        "depth_m": 1.1,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.790625,
+            18.77894
+          ],
+          [
+            73.789575,
+            18.778233
+          ],
+          [
+            73.788329,
+            18.779388
+          ],
+          [
+            73.787414,
+            18.778507
+          ],
+          [
+            73.786156,
+            18.780397
+          ],
+          [
+            73.785259,
+            18.779795
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0048",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 24.2,
+        "depth_m": 1.8,
+        "installed": 2026
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.795993,
+            18.778898
+          ],
+          [
+            73.795479,
+            18.779812
+          ],
+          [
+            73.794583,
+            18.78111
+          ],
+          [
+            73.794538,
+            18.781862
+          ],
+          [
+            73.794112,
+            18.783372
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0049",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 27.9,
+        "depth_m": 1.9,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.786656,
+            18.760635
+          ],
+          [
+            73.787197,
+            18.761144
+          ],
+          [
+            73.787023,
+            18.762415
+          ],
+          [
+            73.788055,
+            18.762877
+          ],
+          [
+            73.78791,
+            18.763714
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0050",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 27.8,
+        "depth_m": 1.5,
+        "installed": 2024
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.801425,
+            18.755132
+          ],
+          [
+            73.800485,
+            18.75588
+          ],
+          [
+            73.799294,
+            18.756402
+          ],
+          [
+            73.79855,
+            18.757206
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0051",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.3,
+        "depth_m": 1.7,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.808918,
+            18.789916
+          ],
+          [
+            73.807747,
+            18.790106
+          ],
+          [
+            73.807224,
+            18.790866
+          ],
+          [
+            73.806373,
+            18.791553
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0052",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 15.2,
+        "depth_m": 1.7,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.797426,
+            18.784891
+          ],
+          [
+            73.798213,
+            18.785625
+          ],
+          [
+            73.798784,
+            18.786054
+          ],
+          [
+            73.798992,
+            18.786964
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0053",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 26.9,
+        "depth_m": 1.3,
+        "installed": 2017
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.785259,
+            18.779795
+          ],
+          [
+            73.784426,
+            18.778861
+          ],
+          [
+            73.784111,
+            18.778147
+          ],
+          [
+            73.784232,
+            18.777043
+          ],
+          [
+            73.78406,
+            18.776067
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0054",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 22.0,
+        "depth_m": 1.7,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.785176,
+            18.766239
+          ],
+          [
+            73.786322,
+            18.766785
+          ],
+          [
+            73.787486,
+            18.768001
+          ],
+          [
+            73.787949,
+            18.769101
+          ],
+          [
+            73.787952,
+            18.770203
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0055",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 22.7,
+        "depth_m": 1.9,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794109,
+            18.776205
+          ],
+          [
+            73.79282,
+            18.775804
+          ],
+          [
+            73.792221,
+            18.775052
+          ],
+          [
+            73.791632,
+            18.773868
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0056",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.9,
+        "depth_m": 1.8,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.822138,
+            18.723232
+          ],
+          [
+            73.821391,
+            18.722284
+          ],
+          [
+            73.821734,
+            18.72108
+          ],
+          [
+            73.821204,
+            18.719752
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0057",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 25.7,
+        "depth_m": 1.6,
+        "installed": 2024
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.798019,
+            18.790327
+          ],
+          [
+            73.798725,
+            18.791493
+          ],
+          [
+            73.79763,
+            18.792522
+          ],
+          [
+            73.797735,
+            18.793476
+          ],
+          [
+            73.798389,
+            18.794419
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0058",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 22.3,
+        "depth_m": 1.2,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.791632,
+            18.773868
+          ],
+          [
+            73.791101,
+            18.773443
+          ],
+          [
+            73.791656,
+            18.772723
+          ],
+          [
+            73.79111,
+            18.772036
+          ],
+          [
+            73.790748,
+            18.771525
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0059",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 15.1,
+        "depth_m": 1.4,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.815588,
+            18.789549
+          ],
+          [
+            73.816633,
+            18.790128
+          ],
+          [
+            73.817838,
+            18.790284
+          ],
+          [
+            73.819078,
+            18.791203
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0060",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 28.8,
+        "depth_m": 1.8,
+        "installed": 2017
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81273,
+            18.758183
+          ],
+          [
+            73.811655,
+            18.758712
+          ],
+          [
+            73.810811,
+            18.758853
+          ],
+          [
+            73.809901,
+            18.759843
+          ],
+          [
+            73.808523,
+            18.759697
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0061",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 15.4,
+        "depth_m": 1.9,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794112,
+            18.783372
+          ],
+          [
+            73.793527,
+            18.78404
+          ],
+          [
+            73.792736,
+            18.784991
+          ],
+          [
+            73.792112,
+            18.786364
+          ],
+          [
+            73.791277,
+            18.787041
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0062",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 22.6,
+        "depth_m": 1.8,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.788667,
+            18.718723
+          ],
+          [
+            73.788809,
+            18.717751
+          ],
+          [
+            73.78762,
+            18.717031
+          ],
+          [
+            73.787657,
+            18.716094
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0063",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 27.2,
+        "depth_m": 1.5,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.806373,
+            18.791553
+          ],
+          [
+            73.8059,
+            18.792586
+          ],
+          [
+            73.805635,
+            18.793738
+          ],
+          [
+            73.806569,
+            18.794368
+          ],
+          [
+            73.805866,
+            18.795481
+          ],
+          [
+            73.805272,
+            18.796427
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0064",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.5,
+        "depth_m": 1.2,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794933,
+            18.713869
+          ],
+          [
+            73.795215,
+            18.7123
+          ],
+          [
+            73.795341,
+            18.711631
+          ],
+          [
+            73.796148,
+            18.710184
+          ],
+          [
+            73.795399,
+            18.708859
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0065",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.3,
+        "depth_m": 1.7,
+        "installed": 2024
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.818249,
+            18.747087
+          ],
+          [
+            73.81938,
+            18.746814
+          ],
+          [
+            73.819795,
+            18.745993
+          ],
+          [
+            73.820446,
+            18.745332
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0066",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.4,
+        "depth_m": 1.6,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.787929,
+            18.706425
+          ],
+          [
+            73.794933,
+            18.713869
+          ],
+          [
+            73.795183,
+            18.714136
+          ],
+          [
+            73.798315,
+            18.722532
+          ],
+          [
+            73.79481,
+            18.729051
+          ],
+          [
+            73.793298,
+            18.731864
+          ],
+          [
+            73.786886,
+            18.744035
+          ],
+          [
+            73.789966,
+            18.751782
+          ],
+          [
+            73.790941,
+            18.752654
+          ],
+          [
+            73.799635,
+            18.760427
+          ],
+          [
+            73.797448,
+            18.771748
+          ],
+          [
+            73.796745,
+            18.772687
+          ],
+          [
+            73.794109,
+            18.776205
+          ],
+          [
+            73.792519,
+            18.778327
+          ],
+          [
+            73.786942,
+            18.787499
+          ],
+          [
+            73.789118,
+            18.790211
+          ],
+          [
+            73.795825,
+            18.798575
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "TRUNK-067",
+        "type": "Main Trunk",
+        "status": "Active",
+        "material": "High-Pressure Steel",
+        "pressure_bar": 68.1,
+        "depth_m": 3.6,
+        "installed": 1996
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.795993,
+            18.778898
+          ],
+          [
+            73.796754,
+            18.779491
+          ],
+          [
+            73.796804,
+            18.780496
+          ],
+          [
+            73.797796,
+            18.780537
+          ],
+          [
+            73.798343,
+            18.781314
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0068",
+        "type": "Distribution",
+        "status": "Leaking",
+        "material": "HDPE",
+        "pressure_bar": 15.5,
+        "depth_m": 1.2,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.821204,
+            18.719752
+          ],
+          [
+            73.820534,
+            18.719066
+          ],
+          [
+            73.819737,
+            18.717542
+          ],
+          [
+            73.81947,
+            18.716634
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0069",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 23.7,
+        "depth_m": 1.5,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.787952,
+            18.770203
+          ],
+          [
+            73.787688,
+            18.771444
+          ],
+          [
+            73.788562,
+            18.771729
+          ],
+          [
+            73.789178,
+            18.773021
+          ],
+          [
+            73.788849,
+            18.773902
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0070",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 18.5,
+        "depth_m": 1.5,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.824353,
+            18.777631
+          ],
+          [
+            73.824384,
+            18.776532
+          ],
+          [
+            73.824327,
+            18.775448
+          ],
+          [
+            73.822778,
+            18.774925
+          ],
+          [
+            73.823648,
+            18.773643
+          ],
+          [
+            73.82327,
+            18.772529
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0071",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.3,
+        "depth_m": 1.7,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.816646,
+            18.794011
+          ],
+          [
+            73.817476,
+            18.795354
+          ],
+          [
+            73.817968,
+            18.795978
+          ],
+          [
+            73.818896,
+            18.797596
+          ],
+          [
+            73.81859,
+            18.798977
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0072",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 17.8,
+        "depth_m": 2.0,
+        "installed": 2026
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.824495,
+            18.767139
+          ],
+          [
+            73.825011,
+            18.765621
+          ],
+          [
+            73.825456,
+            18.764397
+          ],
+          [
+            73.826038,
+            18.763875
+          ],
+          [
+            73.826023,
+            18.762359
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0073",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 23.5,
+        "depth_m": 1.5,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.810156,
+            18.768307
+          ],
+          [
+            73.81111,
+            18.767074
+          ],
+          [
+            73.810955,
+            18.765751
+          ],
+          [
+            73.811598,
+            18.764657
+          ],
+          [
+            73.81191,
+            18.76389
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0074",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 17.9,
+        "depth_m": 1.5,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.787657,
+            18.716094
+          ],
+          [
+            73.788476,
+            18.715498
+          ],
+          [
+            73.789403,
+            18.714776
+          ],
+          [
+            73.790077,
+            18.71384
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0075",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 18.2,
+        "depth_m": 1.7,
+        "installed": 2020
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.78406,
+            18.776067
+          ],
+          [
+            73.784376,
+            18.775598
+          ],
+          [
+            73.785008,
+            18.775237
+          ],
+          [
+            73.785696,
+            18.774972
+          ],
+          [
+            73.785781,
+            18.77432
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0076",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 19.4,
+        "depth_m": 1.2,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.816646,
+            18.794011
+          ],
+          [
+            73.816168,
+            18.794977
+          ],
+          [
+            73.815292,
+            18.795631
+          ],
+          [
+            73.81523,
+            18.796596
+          ],
+          [
+            73.81437,
+            18.79728
+          ],
+          [
+            73.813459,
+            18.798426
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0077",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 19.1,
+        "depth_m": 1.4,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.811319,
+            18.771424
+          ],
+          [
+            73.81114,
+            18.772109
+          ],
+          [
+            73.812099,
+            18.772579
+          ],
+          [
+            73.812388,
+            18.772987
+          ],
+          [
+            73.81247,
+            18.773889
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0078",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.9,
+        "depth_m": 1.5,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.821423,
+            18.751659
+          ],
+          [
+            73.822406,
+            18.750807
+          ],
+          [
+            73.823191,
+            18.751137
+          ],
+          [
+            73.823501,
+            18.749732
+          ],
+          [
+            73.824143,
+            18.749396
+          ],
+          [
+            73.82544,
+            18.749362
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0079",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.4,
+        "depth_m": 1.1,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.796352,
+            18.748719
+          ],
+          [
+            73.797216,
+            18.747804
+          ],
+          [
+            73.796767,
+            18.746643
+          ],
+          [
+            73.79741,
+            18.745923
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0080",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 16.4,
+        "depth_m": 1.8,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.810556,
+            18.736447
+          ],
+          [
+            73.810571,
+            18.73769
+          ],
+          [
+            73.811311,
+            18.738565
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0081",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.1,
+        "depth_m": 1.8,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.806373,
+            18.791553
+          ],
+          [
+            73.805222,
+            18.792027
+          ],
+          [
+            73.805183,
+            18.793515
+          ],
+          [
+            73.803737,
+            18.79366
+          ],
+          [
+            73.803458,
+            18.795161
+          ],
+          [
+            73.802392,
+            18.795211
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0082",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.1,
+        "depth_m": 1.9,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81247,
+            18.773889
+          ],
+          [
+            73.813946,
+            18.773874
+          ],
+          [
+            73.814704,
+            18.775246
+          ],
+          [
+            73.816489,
+            18.774566
+          ],
+          [
+            73.817916,
+            18.775199
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0083",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 17.8,
+        "depth_m": 1.5,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.808584,
+            18.726625
+          ],
+          [
+            73.807923,
+            18.725761
+          ],
+          [
+            73.808658,
+            18.724827
+          ],
+          [
+            73.807186,
+            18.724066
+          ],
+          [
+            73.807669,
+            18.723461
+          ],
+          [
+            73.806973,
+            18.722478
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0084",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.5,
+        "depth_m": 1.4,
+        "installed": 2017
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81947,
+            18.716634
+          ],
+          [
+            73.818143,
+            18.71581
+          ],
+          [
+            73.817456,
+            18.714928
+          ],
+          [
+            73.817854,
+            18.713217
+          ],
+          [
+            73.816666,
+            18.713038
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0085",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 27.8,
+        "depth_m": 1.7,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.801425,
+            18.755132
+          ],
+          [
+            73.801083,
+            18.756461
+          ],
+          [
+            73.801252,
+            18.757445
+          ],
+          [
+            73.80118,
+            18.758294
+          ],
+          [
+            73.80193,
+            18.759573
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0086",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.3,
+        "depth_m": 1.6,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.79741,
+            18.745923
+          ],
+          [
+            73.79746,
+            18.744514
+          ],
+          [
+            73.79676,
+            18.743427
+          ],
+          [
+            73.797517,
+            18.742771
+          ],
+          [
+            73.797675,
+            18.74162
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0087",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.6,
+        "depth_m": 1.8,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.809936,
+            18.792002
+          ],
+          [
+            73.80861,
+            18.793162
+          ],
+          [
+            73.808664,
+            18.794108
+          ],
+          [
+            73.808329,
+            18.79558
+          ],
+          [
+            73.807954,
+            18.796648
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0088",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 24.1,
+        "depth_m": 1.2,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.798019,
+            18.790327
+          ],
+          [
+            73.798797,
+            18.790695
+          ],
+          [
+            73.800329,
+            18.791355
+          ],
+          [
+            73.801866,
+            18.790431
+          ],
+          [
+            73.802678,
+            18.790965
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0089",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 17.3,
+        "depth_m": 1.4,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.825903,
+            18.725802
+          ],
+          [
+            73.824723,
+            18.726042
+          ],
+          [
+            73.823894,
+            18.727676
+          ],
+          [
+            73.823656,
+            18.728486
+          ],
+          [
+            73.822471,
+            18.729088
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0090",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 18.4,
+        "depth_m": 1.2,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.798389,
+            18.794419
+          ],
+          [
+            73.799204,
+            18.795481
+          ],
+          [
+            73.800257,
+            18.795243
+          ],
+          [
+            73.801129,
+            18.795625
+          ],
+          [
+            73.802463,
+            18.796555
+          ],
+          [
+            73.803204,
+            18.797012
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0091",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 27.9,
+        "depth_m": 1.4,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.810442,
+            18.743401
+          ],
+          [
+            73.809919,
+            18.744088
+          ],
+          [
+            73.809442,
+            18.745016
+          ],
+          [
+            73.809265,
+            18.745985
+          ],
+          [
+            73.807609,
+            18.745763
+          ],
+          [
+            73.807826,
+            18.746593
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0092",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 25.0,
+        "depth_m": 1.6,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.790941,
+            18.752654
+          ],
+          [
+            73.792058,
+            18.752072
+          ],
+          [
+            73.7934,
+            18.751388
+          ],
+          [
+            73.794475,
+            18.751739
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0093",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 27.0,
+        "depth_m": 1.5,
+        "installed": 2017
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.811311,
+            18.738565
+          ],
+          [
+            73.811664,
+            18.739218
+          ],
+          [
+            73.812378,
+            18.739757
+          ],
+          [
+            73.812835,
+            18.740587
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0094",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 18.5,
+        "depth_m": 1.3,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81273,
+            18.758183
+          ],
+          [
+            73.814083,
+            18.757742
+          ],
+          [
+            73.81574,
+            18.758369
+          ],
+          [
+            73.816635,
+            18.757579
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0095",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 17.3,
+        "depth_m": 1.7,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.819078,
+            18.791203
+          ],
+          [
+            73.819685,
+            18.790262
+          ],
+          [
+            73.821238,
+            18.790201
+          ],
+          [
+            73.822825,
+            18.789274
+          ],
+          [
+            73.823828,
+            18.788489
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0096",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 27.4,
+        "depth_m": 1.3,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794475,
+            18.751739
+          ],
+          [
+            73.795869,
+            18.751851
+          ],
+          [
+            73.795923,
+            18.753002
+          ],
+          [
+            73.797095,
+            18.753771
+          ],
+          [
+            73.798135,
+            18.753982
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0097",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 27.7,
+        "depth_m": 1.4,
+        "installed": 2026
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.798389,
+            18.794419
+          ],
+          [
+            73.799729,
+            18.794823
+          ],
+          [
+            73.801131,
+            18.795483
+          ],
+          [
+            73.802392,
+            18.795211
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0098",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 20.8,
+        "depth_m": 1.4,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.793603,
+            18.788008
+          ],
+          [
+            73.794367,
+            18.788185
+          ],
+          [
+            73.795163,
+            18.787724
+          ],
+          [
+            73.795694,
+            18.788038
+          ],
+          [
+            73.796707,
+            18.788219
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0099",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 28.6,
+        "depth_m": 1.2,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.810744,
+            18.706425
+          ],
+          [
+            73.810806,
+            18.717166
+          ],
+          [
+            73.815426,
+            18.722268
+          ],
+          [
+            73.81581,
+            18.723307
+          ],
+          [
+            73.817483,
+            18.727835
+          ],
+          [
+            73.819313,
+            18.732786
+          ],
+          [
+            73.813289,
+            18.745357
+          ],
+          [
+            73.813108,
+            18.745734
+          ],
+          [
+            73.809447,
+            18.751475
+          ],
+          [
+            73.81273,
+            18.758183
+          ],
+          [
+            73.814175,
+            18.761138
+          ],
+          [
+            73.817227,
+            18.767417
+          ],
+          [
+            73.818823,
+            18.770702
+          ],
+          [
+            73.819675,
+            18.778744
+          ],
+          [
+            73.812571,
+            18.788048
+          ],
+          [
+            73.812426,
+            18.788868
+          ],
+          [
+            73.810708,
+            18.798575
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "TRUNK-100",
+        "type": "Main Trunk",
+        "status": "Active",
+        "material": "High-Pressure Steel",
+        "pressure_bar": 76.1,
+        "depth_m": 3.6,
+        "installed": 1998
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.797675,
+            18.74162
+          ],
+          [
+            73.797553,
+            18.740378
+          ],
+          [
+            73.79875,
+            18.740179
+          ],
+          [
+            73.798182,
+            18.739163
+          ],
+          [
+            73.798737,
+            18.738216
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0101",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 19.6,
+        "depth_m": 1.8,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.798135,
+            18.753982
+          ],
+          [
+            73.799152,
+            18.754281
+          ],
+          [
+            73.800182,
+            18.754676
+          ],
+          [
+            73.801425,
+            18.755132
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0102",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 25.3,
+        "depth_m": 1.3,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.798992,
+            18.786964
+          ],
+          [
+            73.799272,
+            18.787849
+          ],
+          [
+            73.799319,
+            18.788558
+          ],
+          [
+            73.800203,
+            18.789237
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0103",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 22.8,
+        "depth_m": 1.5,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.789118,
+            18.790211
+          ],
+          [
+            73.789727,
+            18.789211
+          ],
+          [
+            73.79091,
+            18.788487
+          ],
+          [
+            73.791277,
+            18.787041
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0104",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.1,
+        "depth_m": 1.9,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.808523,
+            18.759697
+          ],
+          [
+            73.807714,
+            18.759576
+          ],
+          [
+            73.806116,
+            18.759514
+          ],
+          [
+            73.805401,
+            18.76013
+          ],
+          [
+            73.804823,
+            18.761051
+          ],
+          [
+            73.803567,
+            18.760878
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0105",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.3,
+        "depth_m": 1.8,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.816635,
+            18.757579
+          ],
+          [
+            73.817645,
+            18.756867
+          ],
+          [
+            73.817965,
+            18.755597
+          ],
+          [
+            73.818456,
+            18.754911
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0106",
+        "type": "Distribution",
+        "status": "Maintenance",
+        "material": "HDPE",
+        "pressure_bar": 17.7,
+        "depth_m": 1.5,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.82544,
+            18.749362
+          ],
+          [
+            73.826314,
+            18.749777
+          ],
+          [
+            73.827136,
+            18.750877
+          ],
+          [
+            73.827895,
+            18.751413
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0107",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 18.8,
+        "depth_m": 1.2,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.786656,
+            18.760635
+          ],
+          [
+            73.78575,
+            18.760041
+          ],
+          [
+            73.784895,
+            18.760041
+          ],
+          [
+            73.784044,
+            18.759802
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0108",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 15.8,
+        "depth_m": 1.0,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.816666,
+            18.713038
+          ],
+          [
+            73.816662,
+            18.712303
+          ],
+          [
+            73.815883,
+            18.71115
+          ],
+          [
+            73.815394,
+            18.710531
+          ],
+          [
+            73.814686,
+            18.709816
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0109",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 18.4,
+        "depth_m": 1.4,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.802678,
+            18.790965
+          ],
+          [
+            73.80383,
+            18.790566
+          ],
+          [
+            73.805023,
+            18.790971
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0110",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 25.7,
+        "depth_m": 1.8,
+        "installed": 2024
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.784044,
+            18.759802
+          ],
+          [
+            73.783499,
+            18.758963
+          ],
+          [
+            73.783684,
+            18.757578
+          ],
+          [
+            73.782019,
+            18.756221
+          ],
+          [
+            73.782507,
+            18.754868
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0111",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.0,
+        "depth_m": 1.4,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.81191,
+            18.76389
+          ],
+          [
+            73.811733,
+            18.763286
+          ],
+          [
+            73.811286,
+            18.762488
+          ],
+          [
+            73.811292,
+            18.761487
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0112",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 19.9,
+        "depth_m": 1.5,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.792452,
+            18.74673
+          ],
+          [
+            73.792153,
+            18.746196
+          ],
+          [
+            73.79189,
+            18.745463
+          ],
+          [
+            73.791348,
+            18.744445
+          ],
+          [
+            73.790032,
+            18.744092
+          ],
+          [
+            73.790075,
+            18.743168
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0113",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 25.4,
+        "depth_m": 1.0,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.822471,
+            18.729088
+          ],
+          [
+            73.82112,
+            18.729396
+          ],
+          [
+            73.820083,
+            18.72948
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0114",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.1,
+        "depth_m": 1.5,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.787814,
+            18.726193
+          ],
+          [
+            73.78781,
+            18.72709
+          ],
+          [
+            73.788324,
+            18.727744
+          ],
+          [
+            73.788626,
+            18.728705
+          ],
+          [
+            73.788384,
+            18.729612
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0115",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.7,
+        "depth_m": 1.6,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.823828,
+            18.788489
+          ],
+          [
+            73.825052,
+            18.788066
+          ],
+          [
+            73.825395,
+            18.786557
+          ],
+          [
+            73.82621,
+            18.786698
+          ],
+          [
+            73.827402,
+            18.785987
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0116",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.9,
+        "depth_m": 1.3,
+        "installed": 2026
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.798343,
+            18.781314
+          ],
+          [
+            73.799475,
+            18.781849
+          ],
+          [
+            73.799763,
+            18.782982
+          ],
+          [
+            73.801452,
+            18.783833
+          ],
+          [
+            73.801828,
+            18.784934
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0117",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 21.9,
+        "depth_m": 1.1,
+        "installed": 2017
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.801828,
+            18.784934
+          ],
+          [
+            73.801876,
+            18.785737
+          ],
+          [
+            73.802456,
+            18.786269
+          ],
+          [
+            73.803143,
+            18.786775
+          ],
+          [
+            73.803558,
+            18.787343
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0118",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.7,
+        "depth_m": 1.3,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.803558,
+            18.787343
+          ],
+          [
+            73.804779,
+            18.7876
+          ],
+          [
+            73.805833,
+            18.787041
+          ],
+          [
+            73.807059,
+            18.78604
+          ],
+          [
+            73.808039,
+            18.785114
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0119",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 24.4,
+        "depth_m": 1.8,
+        "installed": 2025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.795399,
+            18.708859
+          ],
+          [
+            73.795176,
+            18.708082
+          ],
+          [
+            73.79434,
+            18.707206
+          ],
+          [
+            73.794052,
+            18.706068
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0120",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 17.1,
+        "depth_m": 1.9,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.787952,
+            18.770203
+          ],
+          [
+            73.787196,
+            18.771005
+          ],
+          [
+            73.787129,
+            18.772351
+          ],
+          [
+            73.786965,
+            18.773471
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0121",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.4,
+        "depth_m": 2.0,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.789118,
+            18.790211
+          ],
+          [
+            73.788032,
+            18.790256
+          ],
+          [
+            73.786134,
+            18.79044
+          ],
+          [
+            73.784991,
+            18.791941
+          ],
+          [
+            73.783829,
+            18.791282
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0122",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 23.8,
+        "depth_m": 1.9,
+        "installed": 2022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.807826,
+            18.746593
+          ],
+          [
+            73.808438,
+            18.747405
+          ],
+          [
+            73.808771,
+            18.748043
+          ],
+          [
+            73.808667,
+            18.749256
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0123",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 15.6,
+        "depth_m": 1.9,
+        "installed": 2016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.794933,
+            18.713869
+          ],
+          [
+            73.795844,
+            18.713906
+          ],
+          [
+            73.796849,
+            18.713672
+          ],
+          [
+            73.79805,
+            18.713243
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0124",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 27.5,
+        "depth_m": 1.9,
+        "installed": 2017
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.790077,
+            18.71384
+          ],
+          [
+            73.790441,
+            18.713022
+          ],
+          [
+            73.789868,
+            18.711794
+          ],
+          [
+            73.789776,
+            18.710922
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0125",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 24.2,
+        "depth_m": 1.7,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.808039,
+            18.785114
+          ],
+          [
+            73.80787,
+            18.786369
+          ],
+          [
+            73.807033,
+            18.787291
+          ],
+          [
+            73.805415,
+            18.788682
+          ],
+          [
+            73.805517,
+            18.789892
+          ],
+          [
+            73.805023,
+            18.790971
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0126",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 25.3,
+        "depth_m": 1.1,
+        "installed": 2021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.820446,
+            18.745332
+          ],
+          [
+            73.820338,
+            18.744056
+          ],
+          [
+            73.820966,
+            18.743079
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0127",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 26.7,
+        "depth_m": 1.1,
+        "installed": 2018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.816794,
+            18.771147
+          ],
+          [
+            73.817208,
+            18.771815
+          ],
+          [
+            73.817502,
+            18.772927
+          ],
+          [
+            73.817787,
+            18.774123
+          ],
+          [
+            73.817916,
+            18.775199
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0128",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 16.9,
+        "depth_m": 1.3,
+        "installed": 2015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.820446,
+            18.745332
+          ],
+          [
+            73.821405,
+            18.745114
+          ],
+          [
+            73.82184,
+            18.744648
+          ],
+          [
+            73.822449,
+            18.744225
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0129",
+        "type": "Distribution",
+        "status": "Leaking",
+        "material": "HDPE",
+        "pressure_bar": 20.9,
+        "depth_m": 1.9,
+        "installed": 2023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.814686,
+            18.709816
+          ],
+          [
+            73.814363,
+            18.708558
+          ],
+          [
+            73.813666,
+            18.707454
+          ],
+          [
+            73.812453,
+            18.706843
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0130",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 29.2,
+        "depth_m": 1.9,
+        "installed": 2019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.812426,
+            18.788868
+          ],
+          [
+            73.811851,
+            18.787992
+          ],
+          [
+            73.812075,
+            18.786612
+          ],
+          [
+            73.811749,
+            18.785433
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0131",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 17.1,
+        "depth_m": 1.1,
+        "installed": 2024
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            73.813289,
+            18.745357
+          ],
+          [
+            73.812054,
+            18.746126
+          ],
+          [
+            73.810989,
+            18.7462
+          ],
+          [
+            73.810381,
+            18.748255
+          ],
+          [
+            73.809502,
+            18.74895
+          ],
+          [
+            73.808667,
+            18.749256
+          ]
+        ]
+      },
+      "properties": {
+        "pipeline_id": "DIST-0132",
+        "type": "Distribution",
+        "status": "Active",
+        "material": "HDPE",
+        "pressure_bar": 24.3,
+        "depth_m": 1.6,
+        "installed": 2021
+      }
+    }
+  ],
+  "metadata": {
+    "geometry_type": "synthetic_illustrative",
+    "disclaimer": "Geometry in this file is synthetic and illustrative only. It was generated for the MethaTrace prototype and does not represent real underground infrastructure or verified road alignments.",
+    "generator": "scripts/generate_pipeline_network.py",
+    "generator_version": "1.1.0",
+    "random_seed": 42,
+    "source_file": "chakan_pipelines.geojson",
+    "source_sha256": "807ed290a2369cbc30c2be5baee1e50e8eb63f76711bf52b2c5f5c919ce9396e",
+    "coordinate_order": "[longitude, latitude], WGS84 (EPSG:4326)",
+    "generation_parameters": {
+      "id_field": "pipeline_id",
+      "type_field": "type",
+      "tag_features": false
+    },
+    "preserved": "feature order, pipeline IDs and all original properties; only geometry was replaced"
+  }
+}

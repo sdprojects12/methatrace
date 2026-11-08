@@ -92,3 +92,35 @@ def test_pipeline_observations_filters_and_sorts(pipelines, observations):
     sub = ps.pipeline_observations(obs, "P-A")
     assert sub["observation_id"].tolist() == ["O2", "O1"]
     assert ps.pipeline_observations(obs, "missing").empty
+
+
+def test_risk_observations_uses_radius_not_nearest_owner(pipelines, observations):
+    pl = ps.normalize_pipelines(pipelines)
+    obs = ps.attach_observations(pl, ps.flag_threshold(observations))
+    obs.loc[obs["observation_id"] == "O2", "pipeline_id"] = "P-B"
+
+    selected = ps.risk_observations(pl, obs, "P-A")
+
+    assert "O2" in selected["observation_id"].tolist()
+    assert selected["observation_id"].is_unique
+    assert selected["risk_distance_m"].max() <= 500
+    assert obs.loc[obs["observation_id"] == "O2", "pipeline_id"].iloc[0] == "P-B"
+
+
+def test_risk_observations_excludes_far_and_invalid_coordinate_rows(pipelines, observations):
+    pl = ps.normalize_pipelines(pipelines)
+    obs = ps.flag_threshold(observations)
+    obs.loc[0, "latitude"] = None
+    obs.loc[1, "latitude"] = 20.0
+
+    selected = ps.risk_observations(pl, obs, "P-A")
+
+    assert selected.empty
+
+
+def test_risk_observations_handles_unavailable_and_invalid_geometry(pipelines, observations):
+    pl = ps.normalize_pipelines(pipelines)
+    assert ps.risk_observations(pl, None, "P-A") is None
+    invalid = pl.copy()
+    invalid.loc[0, "geometry"] = None
+    assert ps.risk_observations(invalid, observations, "P-A").empty

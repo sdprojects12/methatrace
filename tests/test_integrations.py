@@ -28,9 +28,18 @@ def test_absent_modules_are_unavailable_not_errors(monkeypatch):
 
 def test_risk_result_adapts_dict_and_object(fake_module, monkeypatch):
     monkeypatch.setattr(ig, "RISK_MODULE", "utils.fake_risk")
-    fake_module("utils.fake_risk", assess_pipeline_risk=lambda **kw: {"score": "0.7", "level": "High", "factors": ["a", "b"]})
+    fake_module("utils.fake_risk", assess_pipeline_risk=lambda **kw: {
+        "score": "0.7",
+        "level": "High",
+        "factors": ["a", "b"],
+        "scored_maximum": 100,
+        "data_quality": "complete",
+        "missing_factors": [],
+    })
     r = ig.assess_risk({"pipeline_id": "P"}, None, {"x": 1})
-    assert r.available and r.score == 0.7 and r.level == "High" and r.factors == ("a", "b") and r.pipeline_id == "P"
+    assert r.available and r.score == 0.7 and r.level == "High"
+    assert r.factors == ("a", "b") and r.pipeline_id == "P"
+    assert r.scored_maximum == 100 and r.data_quality == "complete"
 
     obj = types.SimpleNamespace(score=2, level=None, factors=None)
     fake_module("utils.fake_risk", assess_pipeline_risk=lambda **kw: obj)

@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+/*
+ * Theme tokens
+ * ------------
+ * Dark is the default and keeps the original industrial palette. Light mode
+ * overrides the same semantic tokens on `[data-theme="light"]`, so components
+ * only ever consume semantic colours rather than theme-specific classes.
+ */
+:root {
+  color-scheme: dark;
+
+  --background: #0d1117;
+  --foreground: #f8fafc;
+
+  --surface: #151a20;
+  --surface-raised: #171e26;
+  --surface-sunken: #11161d;
+  --surface-overlay: #111820;
+  --surface-hover: rgb(255 255 255 / 0.06);
+  --sidebar: #11161d;
+
+  --overlay: rgb(0 0 0 / 0.6);
+
+  --border: rgb(255 255 255 / 0.1);
+  --border-subtle: rgb(255 255 255 / 0.05);
+
+  --text-muted: #9ca3af;
+  --text-secondary: #cbd5e1;
+  --text-subtle: #8b95a5;
+
+  --accent: #34d399;
+  --accent-strong: #10b981;
+  --accent-contrast: #07110d;
+
+  --status-success: #34d399;
+  --status-warning: #fbbf24;
+  --status-danger: #f87171;
+  --status-info: #38bdf8;
+  --status-unknown: #64748b;
+
+  --map-background: #0b0f14;
+
+  /* Pipeline map palette */
+  --pipeline-active: #00e5a0;
+  --pipeline-maintenance: #ffb020;
+  --pipeline-leaking: #ff4d5e;
+  --pipeline-unknown: #64748b;
+  --pipeline-casing: #05080b;
+  --pipeline-hover: #f8fafc;
+  --pipeline-selected: #f8fafc;
+
+  /* Observation map palette (original dark treatment) */
+  --obs-normal: #00e5a0;
+  --obs-threshold: #ffb020;
+  --obs-ml-fill: #38bdf8;
+  --obs-ml-ring: #e0f2fe;
+  --obs-both: #ff4d5e;
+  --obs-stroke: #0b0f14;
+  --obs-selected: #f8fafc;
+  --obs-selected-stroke: #0b0f14;
+  --obs-halo: #f8fafc;
+  --obs-cluster-fill: #334155;
+  --obs-cluster-stroke: #94a3b8;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --background: #f3f5f7;
+  --foreground: #17212b;
+
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f8fafc;
+  --surface-overlay: #ffffff;
+  --surface-hover: #eef2f6;
+  --sidebar: #ffffff;
+
+  --overlay: rgb(15 23 42 / 0.35);
+
+  --border: #e2e8f0;
+  --border-subtle: #edf1f5;
+
+  --text-muted: #64748b;
+  --text-secondary: #475569;
+  --text-subtle: #64748b;
+
+  --accent: #047857;
+  --accent-strong: #065f46;
+  --accent-contrast: #ffffff;
+
+  --status-success: #047857;
+  --status-warning: #b45309;
+  --status-danger: #dc2626;
+  --status-info: #0369a1;
+  --status-unknown: #64748b;
+
+  --map-background: #e9eef3;
+
+  /* Pipeline map palette tuned for the light basemap */
+  --pipeline-active: #047857;
+  --pipeline-maintenance: #b45309;
+  --pipeline-leaking: #dc2626;
+  --pipeline-unknown: #64748b;
+  --pipeline-casing: #475569;
+  --pipeline-hover: #0f172a;
+  --pipeline-selected: #0f172a;
+
+  /* Observation map palette tuned for the light basemap */
+  --obs-normal: #047857;
+  --obs-threshold: #b45309;
+  --obs-ml-fill: #0284c7;
+  --obs-ml-ring: #075985;
+  --obs-both: #dc2626;
+  --obs-stroke: #ffffff;
+  --obs-selected: #ffffff;
+  --obs-selected-stroke: #0f172a;
+  --obs-halo: #0f172a;
+  --obs-cluster-fill: #64748b;
+  --obs-cluster-stroke: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-overlay: var(--surface-overlay);
+  --color-surface-hover: var(--surface-hover);
+  --color-sidebar: var(--sidebar);
+
+  --color-overlay: var(--overlay);
+
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+
+  --color-muted: var(--text-muted);
+  --color-secondary: var(--text-secondary);
+  --color-subtle: var(--text-subtle);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-contrast: var(--accent-contrast);
+
+  --color-success: var(--status-success);
+  --color-warning: var(--status-warning);
+  --color-danger: var(--status-danger);
+  --color-info: var(--status-info);
+  --color-unknown: var(--status-unknown);
+
+  --color-map-background: var(--map-background);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * MapLibre controls tuned for the active theme. Selectors are prefixed with
+ * `html` so they win over MapLibre's own equal-specificity rules regardless of
+ * the order in which the two stylesheets are bundled.
+ */
+html .maplibregl-ctrl-group {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.25);
+}
+
+html .maplibregl-ctrl-group button {
+  width: 2.25rem;
+  height: 2.25rem;
+  background: transparent;
+}
+
+html .maplibregl-ctrl-group button:hover {
+  background: var(--surface-hover);
+}
+
+html .maplibregl-ctrl-group button + button {
+  border-top: 1px solid var(--border-subtle);
+}
+
+html .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(1) brightness(1.5);
+}
+
+html[data-theme="light"] .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: none;
+}
+
+html .maplibregl-ctrl-attrib.maplibregl-compact {
+  background: var(--surface-overlay);
+  color: var(--text-muted);
+}
+
+html .maplibregl-ctrl-attrib a {
+  color: var(--text-secondary);
+}
+
+html .maplibregl-ctrl-attrib-button {
+  background-color: transparent;
+  filter: invert(1) brightness(1.5);
+}
+
+html[data-theme="light"] .maplibregl-ctrl-attrib-button {
+  filter: none;
+}
+
+html .maplibregl-ctrl-logo {
+  filter: invert(1) brightness(1.5);
+}
+
+html[data-theme="light"] .maplibregl-ctrl-logo {
+  filter: none;
+}
+
+@media (min-width: 1024px) {
+  html .maplibregl-ctrl-group button {
+    width: 1.875rem;
+    height: 1.875rem;
+  }
+}

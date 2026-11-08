@@ -18,16 +18,11 @@ What this module does
  
 How the score is built (max 100 points, all rules are visible below)
 ---------------------------------------------------------------------
-    Methane  : 0-45 pts  strongest nearby ML-flagged reading (higher PPM and
-                         closer to the pipeline = more points)
-    Age      : 0-20 pts  older pipeline = more points
-    Pressure : 0-20 pts  higher operating pressure = more points
-    Wind     : 0-15 pts  only counts when there IS a methane signal. Full points
-                         if the reading is DOWNWIND of the pipeline (wind is
-                         carrying gas from the pipeline towards the sensor, so
-                         the pipeline is a plausible source). Few points if the
-                         reading is UPWIND (gas is probably coming from
-                         somewhere else).
+    Operational status : 0-40 pts  operational attention indicator
+    Methane            : 0-25 pts  strongest nearby usable anomaly
+    Age                : 0-15 pts  older pipeline = more points
+    Pressure           : 0-10 pts  prototype pressure-exposure heuristic
+    Wind               : 0-10 pts  only counts when there IS a methane signal
  
 Design notes
 ------------
@@ -45,6 +40,8 @@ import logging
 import math
 import urllib.parse
 import urllib.request
+import threading
+import time
 from datetime import datetime
  
 import numpy as np
@@ -63,6 +60,16 @@ CHAKAN_LON = 73.81
 # Open-Meteo "current weather" endpoint (free, no API key needed)
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 WEATHER_TIMEOUT_SECONDS = 5  # never let a slow API freeze the demo
+WEATHER_CACHE_TTL_SECONDS = 600
+WEATHER_FAILURE_COOLDOWN_SECONDS = 60
+_weather_cache = {}
+_weather_cache_lock = threading.Lock()
+
+
+def _clear_weather_cache():
+    """Clear cached weather; useful for deterministic tests and local tooling."""
+    with _weather_cache_lock:
+        _weather_cache.clear()
  
 # Used when the API is unreachable or returns garbage.
 # Wind direction follows the METEOROLOGICAL convention: the direction the
@@ -73,11 +80,12 @@ FALLBACK_WEATHER = {
     "temperature_c": 28.0,
 }
  
-# Score weights (these four add up to 100)
-MAX_METHANE_POINTS = 45.0
-MAX_AGE_POINTS = 20.0
-MAX_PRESSURE_POINTS = 20.0
-MAX_WIND_POINTS = 15.0
+# Score weights (these five add up to 100)
+MAX_OPERATIONAL_POINTS = 40.0
+MAX_METHANE_POINTS = 25.0
+MAX_AGE_POINTS = 15.0
+MAX_PRESSURE_POINTS = 10.0
+MAX_WIND_POINTS = 10.0
  
 # Methane rules
 BACKGROUND_PPM = 2.0       # normal atmospheric methane is ~1.9 PPM -> 0 points
@@ -113,8 +121,8 @@ def _fallback_weather(reason):
     return data
  
  
-def fetch_current_weather(lat=CHAKAN_LAT, lon=CHAKAN_LON,
-                          timeout=WEATHER_TIMEOUT_SECONDS):
+def _fetch_current_weather(lat=CHAKAN_LAT, lon=CHAKAN_LON,
+                           timeout=WEATHER_TIMEOUT_SECONDS):
     """
     Fetch current wind speed, wind direction and temperature from Open-Meteo.
  
@@ -129,7 +137,7 @@ def fetch_current_weather(lat=CHAKAN_LAT, lon=CHAKAN_LON,
  
     This function NEVER raises. Any problem (no internet, timeout, bad JSON,
     missing keys, nonsense values) returns the fallback mock data instead, so
-    the Streamlit demo cannot crash because of the weather.
+    the dashboard cannot crash because of the weather.
     """
     try:
         params = urllib.parse.urlencode({
@@ -166,6 +174,44 @@ def fetch_current_weather(lat=CHAKAN_LAT, lon=CHAKAN_LON,
         logger.warning("Weather fetch failed (%s: %s); using fallback.",
                        type(exc).__name__, exc)
         return _fallback_weather(type(exc).__name__)
+
+
+def fetch_current_weather(lat=CHAKAN_LAT, lon=CHAKAN_LON,
+                          timeout=WEATHER_TIMEOUT_SECONDS):
+    """Return cached weather when fresh; reuse the last live result on failure.
+
+    Successful provider values are cached for ten minutes. Failed requests are
+    cooled down for one minute to avoid hammering the provider during an outage
+    or HTTP 429 response. The previous live value wins over mock fallback data.
+    """
+    key = (round(float(lat), 4), round(float(lon), 4))
+    now = time.monotonic()
+    with _weather_cache_lock:
+        cached = _weather_cache.get(key)
+        if cached:
+            age = now - cached["fetched_at"]
+            if cached["data"].get("source") == "open-meteo" and age < WEATHER_CACHE_TTL_SECONDS:
+                return dict(cached["data"])
+            if now - cached["last_attempt"] < WEATHER_FAILURE_COOLDOWN_SECONDS:
+                return dict(cached["data"])
+
+        result = _fetch_current_weather(lat=lat, lon=lon, timeout=timeout)
+        if result.get("source") == "open-meteo":
+            _weather_cache[key] = {
+                "data": dict(result), "fetched_at": now, "last_attempt": now,
+            }
+            return dict(result)
+
+        if cached and cached["data"].get("source") == "open-meteo":
+            stale = dict(cached["data"])
+            stale["note"] = f"Live weather refresh failed; reusing last successful result. {result.get('note', '')}".strip()
+            cached["last_attempt"] = now
+            return stale
+
+        _weather_cache[key] = {
+            "data": dict(result), "fetched_at": now, "last_attempt": now,
+        }
+        return dict(result)
  
  
 # ----------------------------------------------------------------------------
@@ -249,19 +295,38 @@ def _methane_fraction(ppm):
  
  
 def _age_points(installed_year, reference_year):
-    """Older pipeline -> more points. Missing data -> 0 points."""
+    """Older pipeline -> more points. Missing data is unavailable."""
     if pd.isna(installed_year):
-        return 0.0, None
+        return None, None
     age = max(0, reference_year - int(installed_year))
     return MAX_AGE_POINTS * min(age / AGE_SATURATION_YEARS, 1.0), age
  
  
 def _pressure_points(pressure_bar):
-    """Higher operating pressure -> more points. Missing data -> 0 points."""
-    if pd.isna(pressure_bar):
-        return 0.0
-    frac = min(max(float(pressure_bar), 0.0) / PRESSURE_SATURATION_BAR, 1.0)
+    """Prototype pressure-exposure heuristic; missing data is unavailable."""
+    if pd.isna(pressure_bar) or float(pressure_bar) < 0:
+        return None
+    frac = min(float(pressure_bar) / PRESSURE_SATURATION_BAR, 1.0)
     return MAX_PRESSURE_POINTS * frac
+
+
+def _operational_points(status):
+    """Operational attention points, not evidence of physical danger."""
+    if status is None or pd.isna(status):
+        return None
+    return {
+        "active": 0.0,
+        "maintenance": 15.0,
+        "leaking": 40.0,
+    }.get(str(status).strip().lower())
+
+
+def _usable_number(value):
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
  
  
 def _wind_alignment(obs_bearing_deg, wind_from_deg):
@@ -301,7 +366,7 @@ def _risk_level(score):
 # ----------------------------------------------------------------------------
 # 2 + 3 + 4. RISK SCORING WITH EXPLANATIONS
 # ----------------------------------------------------------------------------
-def calculate_risk_scores(pipelines, observations, weather=None, reference_year=None):
+def _legacy_calculate_risk_scores(pipelines, observations, weather=None, reference_year=None):
     """
     Add a "Simulated Risk Score" and an explanation to every pipeline segment.
  
@@ -441,3 +506,313 @@ def calculate_risk_scores(pipelines, observations, weather=None, reference_year=
     result.attrs["weather"] = weather
     result.attrs["disclaimer"] = RISK_DISCLAIMER
     return result
+
+
+def calculate_risk_scores(pipelines, observations, weather=None, reference_year=None):
+    """Calculate the simulated five-component Pipeline Risk Priority Index."""
+    required_pipe_cols = {"geometry", "pipeline_id", "pressure_bar", "installed"}
+    required_obs_cols = {
+        "latitude", "longitude", "methane_concentration_ppm",
+    }
+    missing_p = required_pipe_cols - set(pipelines.columns)
+    if missing_p:
+        raise ValueError(f"pipelines is missing columns: {sorted(missing_p)}")
+    observations_missing = observations is None
+    if observations_missing:
+        observations = pd.DataFrame(columns=list(required_obs_cols))
+    missing_o = required_obs_cols - set(observations.columns)
+    if missing_o:
+        raise ValueError(f"observations is missing columns: {sorted(missing_o)}")
+    if weather is None:
+        weather = fetch_current_weather()
+    if reference_year is None:
+        reference_year = datetime.now().year
+
+    wind_from = _usable_number(weather.get("wind_direction_deg"))
+    wind_speed = _usable_number(weather.get("wind_speed_kmh"))
+    weather_available = (
+        wind_from is not None and wind_speed is not None and wind_speed >= 0
+    )
+    obs = observations.copy()
+    flags_available = {"is_ml_anomaly", "is_threshold_anomaly"} <= set(obs.columns)
+    usable = obs[["latitude", "longitude", "methane_concentration_ppm"]].notna().all(axis=1)
+    obs_available = not observations_missing and flags_available and not obs.loc[
+        usable, ["is_ml_anomaly", "is_threshold_anomaly"]
+    ].isna().any().any()
+    obs = obs[usable].copy()
+    if obs_available:
+        obs["is_ml_anomaly"] = obs["is_ml_anomaly"].astype(bool)
+        obs["is_threshold_anomaly"] = obs["is_threshold_anomaly"].astype(bool)
+        obs = obs[obs["is_ml_anomaly"] | obs["is_threshold_anomaly"]]
+    else:
+        obs = obs.iloc[0:0]
+    if obs_available and not obs.empty:
+        obs_x, obs_y = _to_local_metres(
+            obs["longitude"].to_numpy(), obs["latitude"].to_numpy()
+        )
+        obs_ppm = obs["methane_concentration_ppm"].to_numpy(dtype=float)
+
+    scores, levels, explanations = [], [], []
+    component_values = {key: [] for key in (
+        "operational", "methane", "age", "pressure", "wind"
+    )}
+    component_available = {key: [] for key in component_values}
+    maxima = {
+        "operational": MAX_OPERATIONAL_POINTS,
+        "methane": MAX_METHANE_POINTS,
+        "age": MAX_AGE_POINTS,
+        "pressure": MAX_PRESSURE_POINTS,
+        "wind": MAX_WIND_POINTS,
+    }
+    names = {
+        "operational": "Operational status",
+        "methane": "Methane observations",
+        "age": "Pipeline age",
+        "pressure": "Rated pressure",
+        "wind": "Wind conditions",
+    }
+    scored_maximums, qualities, missing_lists = [], [], []
+
+    for _, row in pipelines.iterrows():
+        operational_pts = _operational_points(row.get("status"))
+        methane_fraction = None if not obs_available else 0.0
+        best = None
+        vertices = _line_vertices(row["geometry"])
+        if obs_available and vertices is not None and not obs.empty:
+            vx, vy = _to_local_metres(vertices[:, 0], vertices[:, 1])
+            dist, near_x, near_y = _nearest_point_on_line(
+                np.column_stack([vx, vy]), obs_x, obs_y
+            )
+            closeness = np.clip(1.0 - dist / SEARCH_RADIUS_M, 0.0, 1.0)
+            multiplier = np.where(
+                obs["is_ml_anomaly"].to_numpy(), 1.0, 0.75
+            )
+            signal = _methane_fraction(obs_ppm) * closeness * multiplier
+            if signal.max() > 0:
+                index = int(np.argmax(signal))
+                methane_fraction = float(signal[index])
+                bearing = math.degrees(math.atan2(
+                    obs_x[index] - near_x[index],
+                    obs_y[index] - near_y[index],
+                )) % 360.0
+                best = {
+                    "ppm": float(obs_ppm[index]),
+                    "dist": float(dist[index]),
+                    "bearing": bearing,
+                }
+
+        methane_pts = (
+            None if methane_fraction is None
+            else MAX_METHANE_POINTS * methane_fraction
+        )
+        wind_pts = None if not weather_available else 0.0
+        position = None
+        if best is not None and weather_available:
+            alignment, diff = _wind_alignment(best["bearing"], wind_from)
+            wind_pts = MAX_WIND_POINTS * alignment * methane_fraction
+            position = _position_word(diff)
+        age_pts, age_years = _age_points(row["installed"], reference_year)
+        pressure_pts = _pressure_points(row["pressure_bar"])
+        values = {
+            "operational": operational_pts,
+            "methane": methane_pts,
+            "age": age_pts,
+            "pressure": pressure_pts,
+            "wind": wind_pts,
+        }
+        missing = [names[key] for key, value in values.items() if value is None]
+        total = round(sum(value for value in values.values() if value is not None), 1)
+        scored_maximum = sum(
+            maxima[key] for key, value in values.items() if value is not None
+        )
+        level = _risk_level(total) if not missing else "Incomplete"
+        methane_text = (
+            f"{best['ppm']:.1f} PPM methane detected {best['dist']:.0f}m {position}"
+            if best is not None
+            else f"no usable methane anomaly within {SEARCH_RADIUS_M:.0f}m"
+        )
+        age_text = (
+            f"installed {int(row['installed'])} ({age_years} yrs old)"
+            if age_years is not None else "install year unavailable"
+        )
+        pressure_text = (
+            f"{float(row['pressure_bar']):.1f} bar"
+            if pressure_pts is not None else "pressure unavailable"
+        )
+        explanation = (
+            f"{level} Risk Priority Index (Simulated): {methane_text}; "
+            f"{age_text}; {pressure_text}; "
+            f"wind from {wind_from:.0f}\N{DEGREE SIGN} at {wind_speed:.0f} km/h."
+            if weather_available else
+            f"{level} Risk Priority Index (Simulated): {methane_text}; "
+            f"{age_text}; {pressure_text}; wind unavailable."
+        )
+        scores.append(total)
+        levels.append(level)
+        explanations.append(explanation)
+        for key, value in values.items():
+            component_values[key].append(
+                None if value is None else round(value, 1)
+            )
+            component_available[key].append(value is not None)
+        scored_maximums.append(scored_maximum)
+        qualities.append("complete" if not missing else "incomplete")
+        missing_lists.append(missing)
+
+    result = pipelines.copy()
+    result["simulated_risk_score"] = scores
+    result["risk_level"] = levels
+    result["risk_explanation"] = explanations
+    for key in component_values:
+        result[f"score_{key}"] = component_values[key]
+        result[f"score_{key}_available"] = component_available[key]
+    result["scored_maximum"] = scored_maximums
+    result["data_quality"] = qualities
+    result["missing_factors"] = missing_lists
+    result.attrs["weather"] = weather
+    result.attrs["disclaimer"] = RISK_DISCLAIMER
+    return result
+
+
+def assess_pipeline_risk(
+    pipeline: dict,
+    observations: pd.DataFrame,
+    sensor_reading: dict = None,
+    weather: dict = None,
+) -> dict:
+    """
+    Adapt the existing fleet risk engine for one selected pipeline.
+
+    Returns a structured result for utils.integrations.
+    """
+
+    from shapely.geometry import LineString
+
+    geometry = pipeline.get("geometry")
+    if geometry is None:
+        start = pipeline.get("start_coords")
+        end = pipeline.get("end_coords")
+
+        if not start or not end:
+            raise ValueError("Pipeline start/end coordinates are unavailable.")
+
+        # Dashboard coordinates are (latitude, longitude).
+        # Shapely expects (longitude, latitude).
+        geometry = LineString([
+            (start[1], start[0]),
+            (end[1], end[0]),
+        ])
+
+    installed = pipeline.get("installation_year")
+    if installed is None:
+        installed = pipeline.get("installed")
+
+    single_pipeline = pd.DataFrame([{
+        "pipeline_id": pipeline["pipeline_id"],
+        "geometry": geometry,
+        "status": pipeline.get("status"),
+        "pressure_bar": pipeline.get("pressure_bar"),
+        "installed": installed,
+    }])
+
+    result = calculate_risk_scores(
+        single_pipeline,
+        observations,
+        weather=weather,
+    )
+
+    row = result.iloc[0]
+    weather_used = result.attrs.get("weather", {})
+    factor_specs = [
+        ("Operational status", "operational", MAX_OPERATIONAL_POINTS),
+        ("Methane observations", "methane", MAX_METHANE_POINTS),
+        ("Pipeline age", "age", MAX_AGE_POINTS),
+        ("Rated pressure", "pressure", MAX_PRESSURE_POINTS),
+        ("Wind conditions", "wind", MAX_WIND_POINTS),
+    ]
+    explanations = {
+        "operational": (
+            f"Operational status is {pipeline.get('status')}."
+            if row["score_operational_available"]
+            else "Operational status unavailable."
+        ),
+        "methane": (
+            f"{row['score_methane']:.1f}/{MAX_METHANE_POINTS:g} points from the strongest usable nearby methane anomaly."
+            if row["score_methane_available"] and row["score_methane"] > 0
+            else (
+                f"No usable methane anomalies within {SEARCH_RADIUS_M:.0f}m."
+                if row["score_methane_available"]
+                else "Observation anomaly classification unavailable."
+            )
+        ),
+        "age": (
+            f"{row['score_age']:.1f}/{MAX_AGE_POINTS:g} points from pipeline age."
+            if row["score_age_available"]
+            else "Install year unavailable."
+        ),
+        "pressure": (
+            f"{row['score_pressure']:.1f}/{MAX_PRESSURE_POINTS:g} points from rated pressure; prototype pressure-exposure heuristic."
+            if row["score_pressure_available"]
+            else "Rated pressure unavailable."
+        ),
+        "wind": (
+            f"{row['score_wind']:.1f}/{MAX_WIND_POINTS:g} points from wind alignment."
+            if row["score_wind_available"] and row["score_wind"] > 0
+            else (
+                "No methane signal to associate with wind."
+                if row["score_wind_available"]
+                else "Wind data unavailable."
+            )
+        ),
+    }
+    methane_explanation = (
+        f"{row['score_methane']:.1f}/{MAX_METHANE_POINTS:g} points from nearby methane."
+        if row["score_methane_available"] and row["score_methane"] > 0
+        else f"No usable methane anomaly within {SEARCH_RADIUS_M:.0f}m."
+    )
+    age_explanation = (
+        f"{row['score_age']:.1f}/{MAX_AGE_POINTS:g} points from pipeline age."
+        if row["score_age_available"]
+        else "Install year unavailable; no age points."
+    )
+    pressure_explanation = (
+        f"{row['score_pressure']:.1f}/{MAX_PRESSURE_POINTS:g} points from rated pressure."
+        if row["score_pressure_available"]
+        else "Rated pressure unavailable; no pressure points."
+    )
+    wind_explanation = (
+        f"{row['score_wind']:.1f}/{MAX_WIND_POINTS:g} points from wind alignment with the methane signal."
+        if row["score_wind_available"] and row["score_wind"] > 0
+        else "No wind points because there is no usable ML methane signal."
+    )
+
+    factor_breakdown = [
+        {
+            "name": name,
+            "score": None if not row[f"score_{key}_available"] else round(float(row[f"score_{key}"]), 1),
+            "maximum": maximum,
+            "available": bool(row[f"score_{key}_available"]),
+            "explanation": explanations[key],
+        }
+        for name, key, maximum in factor_specs
+    ]
+
+    factors = [
+        f"Operational status contribution: {row['score_operational'] if row['score_operational_available'] else 'unavailable'}/40",
+        f"Methane contribution: {row['score_methane'] if row['score_methane_available'] else 'unavailable'}/25",
+        f"Pipeline age contribution: {row['score_age'] if row['score_age_available'] else 'unavailable'}/15",
+        f"Pressure contribution: {row['score_pressure'] if row['score_pressure_available'] else 'unavailable'}/10",
+        f"Wind contribution: {row['score_wind'] if row['score_wind_available'] else 'unavailable'}/10",
+        row["risk_explanation"],
+    ]
+
+    return {
+        "score": float(row["simulated_risk_score"]),
+        "level": str(row["risk_level"]),
+        "factors": factors,
+        "factor_breakdown": factor_breakdown,
+        "weather": dict(weather_used),
+        "scored_maximum": int(row["scored_maximum"]),
+        "data_quality": str(row["data_quality"]),
+        "missing_factors": list(row["missing_factors"]),
+    }

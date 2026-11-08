@@ -41,6 +41,11 @@ class RiskResult:
     level: str = None
     factors: tuple = ()
     message: str = ""
+    factor_breakdown: tuple = ()
+    weather: dict = field(default_factory=dict)
+    scored_maximum: float = None
+    data_quality: str = ""
+    missing_factors: tuple = ()
 
     @property
     def available(self) -> bool:
@@ -100,17 +105,33 @@ def assess_risk(pipeline: dict, observations, sensor_reading: dict = None, weath
     if raw is None:
         return RiskResult(STATUS_ERROR, pid, message="Risk engine returned no result.")
 
-    score, level, factors = _field(raw, "score"), _field(raw, "level"), _field(raw, "factors")
+    score = _field(raw, "score")
+    level = _field(raw, "level")
+    factors = _field(raw, "factors")
+    factor_breakdown = _field(raw, "factor_breakdown")
+    weather = _field(raw, "weather")
+    scored_maximum = _field(raw, "scored_maximum")
+    data_quality = _field(raw, "data_quality")
+    missing_factors = _field(raw, "missing_factors")
     if score is None and level is None:
         return RiskResult(STATUS_ERROR, pid, message="Risk engine result has neither 'score' nor 'level'.")
     try:
         score = None if score is None else float(score)
     except (TypeError, ValueError):
         return RiskResult(STATUS_ERROR, pid, message="Risk engine returned a non-numeric score.")
+    try:
+        scored_maximum = None if scored_maximum is None else float(scored_maximum)
+    except (TypeError, ValueError):
+        return RiskResult(STATUS_ERROR, pid, message="Risk engine returned a non-numeric scored maximum.")
     return RiskResult(
         STATUS_OK, pid, score=score,
         level=None if level is None else str(level),
         factors=tuple(str(f) for f in (factors or ())),
+        factor_breakdown=tuple(factor_breakdown or ()),
+        weather=dict(weather or {}),
+        scored_maximum=scored_maximum,
+        data_quality="" if data_quality is None else str(data_quality),
+        missing_factors=tuple(str(factor) for factor in (missing_factors or ())),
     )
 
 

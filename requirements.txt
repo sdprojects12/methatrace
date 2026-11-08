@@ -2,7 +2,9 @@ pandas
 geopandas
 shapely
 pytest
-streamlit
 scikit-learn
-pydeck
 reportlab
+fastapi
+uvicorn[standard]
+google-genai>=3.0.0
+python-dotenv>=1.0.0
